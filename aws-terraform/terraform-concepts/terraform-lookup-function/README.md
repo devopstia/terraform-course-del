@@ -1,3 +1,48 @@
+
+## variables
+```s
+variable "vm" {
+  type = map(string)
+  default = {
+    region                 = "us-east-1"
+    availability_zones     = ""
+    instance_types         = ""
+    subnet_id              = "subnet-096d45c28d9fb4c14"
+    ami                    = "ami-0fc5d935ebf8bc3bc"
+    vpc_security_group_ids = "sg-0c51540c60857b7ed"
+    key_name               = "jenkins-key"
+    volume_size            = "10"
+  }
+}
+```
+```s
+# Print the "region" value
+lookup(var.vm, "region")
+
+# Print the "availability_zones" value
+lookup(var.vm, "availability_zones")
+
+# Print the "instance_types" value
+lookup(var.vm, "instance_types")
+
+# Print the "subnet_id" value
+lookup(var.vm, "subnet_id")
+
+# Print the "ami" value
+lookup(var.vm, "ami")
+
+# Print the "vpc_security_group_ids" value
+lookup(var.vm, "vpc_security_group_ids")
+
+# Print the "key_name" value
+lookup(var.vm, "key_name")
+
+# Print the "volume_size" value
+lookup(var.vm, "volume_size")
+```
+
+
+
 ## Variable
 ```s
 variable "postgres" {
