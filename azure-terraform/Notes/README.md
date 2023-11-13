@@ -45,8 +45,6 @@ what?
 
 ```t
 # Terraform lookup() Function with our map
-terraform console
-
 lookup(map, key, default)
 
 > lookup({"eastus"="Basic", "eastus2"="Standard"},"eastus", "Basic")
@@ -84,34 +82,26 @@ resource "azurerm_public_ip" "mypublicip" {
 ```
 
 ## Element function
-terraform console
 
 ```t
-> length(["a", "b", "c"])
-3
 >  element(["a", "b", "c"], 0)
 a
 >  element(["a", "b", "c"], 1)
 b
 >  element(["a", "b", "c"], 2)
 c
->  element(["a", "b", "c"], 4)
+>  element(["a", "b", "c"], 3)
 a
-> element(["a", "b", "c"], 4)
-"b"
 
+> element(["a", "b", "c"], length(["a", "b", "c"])-0)
+a
+> element(["a", "b", "c"], length(["a", "b", "c"])-1)
+c
+> element(["a", "b", "c"], length(["a", "b", "c"])-2)
+b
 
 > length(["a", "b", "c"])
 3
-
-> length(["subnet-5d861027","subnet-e33e9baf","subnet-70713b19"])
-3
-> element(["subnet-5d861027","subnet-e33e9baf","subnet-70713b19"], 0)
-"subnet-5d861027"
-> element(["subnet-5d861027","subnet-e33e9baf","subnet-70713b19"], 1)
-"subnet-e33e9baf"
-> element(["subnet-5d861027","subnet-e33e9baf","subnet-70713b19"], 2)
-"subnet-70713b19"
 ```
 
 ```t
@@ -135,7 +125,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "ec2" {
-  ami           = length(var.subnets)
+  ami           = var.ec2_ami
   instance_type = var.instance_type
   key_name = var.ec2_keypair
   count = var.ec2_count
