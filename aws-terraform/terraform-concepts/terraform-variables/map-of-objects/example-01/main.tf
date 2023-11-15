@@ -1,5 +1,3 @@
-## Eample
-```s
 terraform {
   required_version = ">= 1.0.0"
   required_providers {
@@ -27,7 +25,7 @@ variable "instance_configs" {
     tags                   = map(string)
   }))
   default = {
-    instance1 = {
+    example = {
       ami                    = "ami-0fc5d935ebf8bc3bc"
       instance_type          = "t2.micro"
       key_name               = "jenkins-key"
@@ -35,26 +33,14 @@ variable "instance_configs" {
       subnet_id              = "subnet-096d45c28d9fb4c14"
       volume_size            = "10"
       tags = {
-        Name      = "vm-1"
-        Create_By = "Terraform"
-      }
-    },
-    instance2 = {
-      ami                    = "ami-0fc5d935ebf8bc3bc"
-      instance_type          = "t2.micro"
-      key_name               = "jenkins-key"
-      vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
-      subnet_id              = "subnet-096d45c28d9fb4c14"
-      volume_size            = "20"
-      tags = {
-        Name      = "vm-2"
+        Name      = "vm"
         Create_By = "Terraform"
       }
     }
   }
 }
 
-# Create the AWS instances using the map of objects
+# Create the AWS instance using the map of objects
 resource "aws_instance" "example" {
   for_each = var.instance_configs
 
@@ -70,4 +56,3 @@ resource "aws_instance" "example" {
 
   tags = var.instance_configs[each.key].tags
 }
-```

@@ -1,5 +1,3 @@
-## Eample
-```s
 terraform {
   required_version = ">= 1.0.0"
   required_providers {
@@ -70,4 +68,3 @@ resource "aws_instance" "example" {
 
   tags = var.instance_configs[each.key].tags
 }
-```

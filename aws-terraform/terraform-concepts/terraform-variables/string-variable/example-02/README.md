@@ -1,9 +1,15 @@
+## Example
+```s
 terraform {
   required_version = ">= 1.0.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 4.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.1.0"
     }
   }
 }
@@ -30,3 +36,21 @@ resource "aws_instance" "vm" {
   }
 }
 
+
+resource "random_string" "bucket_suffix" {
+  length  = 8
+  special = false
+  upper   = false
+  number  = false
+}
+
+resource "aws_s3_bucket" "example_bucket" {
+  bucket = "my-unique-bucket-${random_string.bucket_suffix.result}"
+
+  tags = {
+    Name      = "my-unique-bucket-${random_string.bucket_suffix.result}"
+    Create_By = "Terraform"
+  }
+}
+
+```

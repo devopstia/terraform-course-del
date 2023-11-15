@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1" # Specify the common region for all instances
+  region = "us-east-1"
 }
 
 # Define a list variable to store instance configurations
@@ -32,19 +32,7 @@ variable "instance_configs" {
       subnet_id              = "subnet-096d45c28d9fb4c14"
       volume_size            = "10"
       tags = {
-        Name      = "vm-1"
-        Create_By = "Terraform"
-      }
-    },
-    {
-      ami                    = "ami-0fc5d935ebf8bc3bc"
-      instance_type          = "t2.small"
-      key_name               = "my-key"
-      vpc_security_group_ids = ["sg-0123456789abcdef0"]
-      subnet_id              = "subnet-096d45c28d9fb4c14" # Same subnet for all instances
-      volume_size            = "20"
-      tags = {
-        Name      = "vm-2"
+        Name      = "vm"
         Create_By = "Terraform"
       }
     }
