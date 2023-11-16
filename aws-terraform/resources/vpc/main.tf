@@ -42,11 +42,29 @@ locals {
   }
 }
 
+# module "vpc" {
+#   source             = "../../modules/vpc"
+#   cidr_block         = local.cidr_block
+#   region             = local.region
+#   availability_zones = local.availability_zones
+#   cluster_name       = local.cluster_name
+#   tags               = local.tags
+# }
+
 module "vpc" {
-  source             = "../../modules/vpc"
+  source             = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones
   cluster_name       = local.cluster_name
   tags               = local.tags
 }
+
+# module "vpc" {
+#   source             = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
+#   cidr_block         = local.cidr_block
+#   region             = local.region
+#   availability_zones = local.availability_zones
+#   cluster_name       = local.cluster_name
+#   tags               = local.tags
+# }

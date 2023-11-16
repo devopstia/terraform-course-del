@@ -43,7 +43,6 @@ locals {
     "create_by"      = "Terraform"
     "cloud_provider" = "aws"
   }
-
 }
 
 module "eks-control-plane" {
@@ -57,9 +56,8 @@ module "eks-control-plane" {
   tags                    = local.tags
 }
 
-
 # module "eks-control-plane" {
-#   source                  = "git::ssh://git@github.com/devopstia/terraform-tia.git//aws-terraform/module-example/modules/vpc/vpc-pure?ref=main"
+#   source                  = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/eks-control-plane?ref=main"
 #   region                  = local.region
 #   cluster_name            = local.cluster_name
 #   eks_version             = local.eks_version
