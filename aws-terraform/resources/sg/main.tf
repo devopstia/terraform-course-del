@@ -1,5 +1,5 @@
 provider "aws" {
-  region = local.region
+  region = local.aws_region
 }
 
 terraform {
@@ -22,15 +22,16 @@ terraform {
 # }
 
 locals {
-  region       = "us-east-1"
-  cluster_name = "2560-dev-del"
-  cidr_block   = "10.0.0.0/16"
-  availability_zones = [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c"
-  ]
+  aws_region = "us-east-1"
+  vpc_id     = "vpc-068852590ea4b093b"
+  sg_name    = "bastion-sg"
 
+  allowed_ports = [
+    22,
+    80,
+    8080,
+    443
+  ]
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
@@ -42,11 +43,11 @@ locals {
   }
 }
 
-module "vpc" {
-  source             = "../../modules/vpc"
-  cidr_block         = local.cidr_block
-  region             = local.region
-  availability_zones = local.availability_zones
-  cluster_name       = local.cluster_name
-  tags               = local.tags
+module "sg" {
+  source        = "../../modules/sg"
+  aws_region    = local.aws_region
+  vpc_id        = local.vpc_id
+  sg_name       = local.sg_name
+  allowed_ports = local.allowed_ports
+  tags          = local.tags
 }

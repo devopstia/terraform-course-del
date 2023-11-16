@@ -1,5 +1,6 @@
+
 provider "aws" {
-  region = local.region
+  region = local.aws_region
 }
 
 terraform {
@@ -21,16 +22,11 @@ terraform {
 #   }
 # }
 
-locals {
-  region       = "us-east-1"
-  cluster_name = "2560-dev-del"
-  cidr_block   = "10.0.0.0/16"
-  availability_zones = [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c"
-  ]
 
+locals {
+  aws_region                = "us-east-1"
+  domain_name               = "devopssimplelearning.com"
+  subject_alternative_names = "*.devopssimplelearning.com"
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
@@ -42,11 +38,11 @@ locals {
   }
 }
 
-module "vpc" {
-  source             = "../../modules/vpc"
-  cidr_block         = local.cidr_block
-  region             = local.region
-  availability_zones = local.availability_zones
-  cluster_name       = local.cluster_name
-  tags               = local.tags
+
+module "acm" {
+  source                    = "../../modules/acm"
+  aws_region                = local.aws_region
+  domain_name               = local.domain_name
+  subject_alternative_names = local.subject_alternative_names
+  tags                      = local.tags
 }

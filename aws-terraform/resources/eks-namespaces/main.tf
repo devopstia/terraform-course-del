@@ -1,5 +1,5 @@
 provider "aws" {
-  region = local.region
+  region = local.aws_region
 }
 
 terraform {
@@ -22,13 +22,20 @@ terraform {
 # }
 
 locals {
-  region       = "us-east-1"
-  cluster_name = "2560-dev-del"
-  cidr_block   = "10.0.0.0/16"
-  availability_zones = [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c"
+  control_plane_name = "2560-dev-del"
+  aws_region         = "us-east-1"
+  name_spaces = [
+    "aws-ebs-csi-driver",
+    "aws-efs-csi-driver",
+    "cluster-autoscaler",
+    "external-dns",
+    "metrics-server",
+    "app",
+    "datadog",
+    "monitoring",
+    "argocd",
+    "security",
+    "jenkins",
   ]
 
   tags = {
@@ -42,11 +49,10 @@ locals {
   }
 }
 
-module "vpc" {
-  source             = "../../modules/vpc"
-  cidr_block         = local.cidr_block
-  region             = local.region
-  availability_zones = local.availability_zones
-  cluster_name       = local.cluster_name
+module "eks-namespaces" {
+  source             = "../../modules/eks-namespaces"
+  aws_region         = local.aws_region
+  control_plane_name = local.control_plane_name
+  name_spaces        = local.name_spaces
   tags               = local.tags
 }

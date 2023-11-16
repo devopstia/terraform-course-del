@@ -1,5 +1,5 @@
 resource "aws_iam_role" "nodes" {
-  name = format("%s-%s-%s-blue-green-node-group-role", var.common_tags["id"], var.common_tags["environment"], var.common_tags["project"])
+  name = format("%s-%s-%s-blue-green-node-group-role", var.tags["id"], var.tags["environment"], var.tags["project"])
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 }
 
 resource "aws_iam_role_policy" "node-group-ClusterAutoscalerPolicy" {
-  name = format("%s-%s-%s-blue-green-cluster-auto-scaler-policy", var.common_tags["id"], var.common_tags["environment"], var.common_tags["project"])
+  name = format("%s-%s-%s-blue-green-cluster-auto-scaler-policy", var.tags["id"], var.tags["environment"], var.tags["project"])
   role = aws_iam_role.nodes.name
 
   policy = jsonencode({
@@ -53,7 +53,7 @@ resource "aws_iam_role_policy" "node-group-ClusterAutoscalerPolicy" {
 }
 
 resource "aws_iam_role_policy" "external_dns_policy" {
-  name = format("%s-%s-%s-blue-green-external-dns-policy", var.common_tags["id"], var.common_tags["environment"], var.common_tags["project"])
+  name = format("%s-%s-%s-blue-green-external-dns-policy", var.tags["id"], var.tags["environment"], var.tags["project"])
   role = aws_iam_role.nodes.name
 
   policy = jsonencode({
