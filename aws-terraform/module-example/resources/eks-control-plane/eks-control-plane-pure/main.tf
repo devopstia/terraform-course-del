@@ -4,12 +4,12 @@ provider "aws" {
 
 terraform {
   required_version = ">= 1.0.0"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
+  # required_providers {
+  #   aws = {
+  #     source  = "hashicorp/aws"
+  #     version = "~> 4.0"
+  #   }
+  # }
 }
 
 # terraform {
@@ -46,8 +46,21 @@ locals {
 
 }
 
+# module "eks-control-plane" {
+#   # source = "../../../modules/eks-control-plane/eks-control-plane-pure"
+#   source                  = "github.com/devopstia/terraform-examples/modules/eks-control-plane/eks-control-plane-pure?ref=main"
+#   region                  = local.region
+#   cluster_name            = local.cluster_name
+#   eks_version             = local.eks_version
+#   endpoint_private_access = local.endpoint_private_access
+#   endpoint_public_access  = local.endpoint_public_access
+#   public_subnets          = local.public_subnets
+#   tags                    = local.tags
+# }
+
+
 module "eks-control-plane" {
-  source                  = "../../../modules/eks-control-plane/eks-control-plane-pure"
+  source                  = "git::ssh://git@github.com/devopstia/terraform-tia.git//aws-terraform/module-example/modules/vpc/vpc-pure?ref=main"
   region                  = local.region
   cluster_name            = local.cluster_name
   eks_version             = local.eks_version
@@ -56,3 +69,5 @@ module "eks-control-plane" {
   public_subnets          = local.public_subnets
   tags                    = local.tags
 }
+
+
