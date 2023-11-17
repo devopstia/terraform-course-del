@@ -23,15 +23,13 @@ terraform {
 
 locals {
   aws_region = "us-east-1"
-  vpc_id     = "vpc-068852590ea4b093b"
-  sg_name    = "app-sg"
-
-  allowed_ports = [
-    22,
-    80,
-    8080,
-    443
+  aws-secret-string = [
+    "mysql-db-password",
+    "postges-aurora-db-password",
+    "postgres-db",
+    "mysql-aurora-db-password"
   ]
+
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
@@ -43,11 +41,9 @@ locals {
   }
 }
 
-module "sg" {
-  source        = "../../modules/sg"
-  aws_region    = local.aws_region
-  vpc_id        = local.vpc_id
-  sg_name       = local.sg_name
-  allowed_ports = local.allowed_ports
-  tags          = local.tags
+module "aws-secret-manager" {
+  source            = "../../modules/aws-secret-manager"
+  aws_region        = local.aws_region
+  aws-secret-string = local.aws-secret-string
+  tags              = local.tags
 }

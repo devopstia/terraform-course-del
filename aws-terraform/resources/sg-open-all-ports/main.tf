@@ -24,14 +24,8 @@ terraform {
 locals {
   aws_region = "us-east-1"
   vpc_id     = "vpc-068852590ea4b093b"
-  sg_name    = "app-sg"
+  sg_name    = "vm-sg"
 
-  allowed_ports = [
-    22,
-    80,
-    8080,
-    443
-  ]
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
@@ -43,11 +37,10 @@ locals {
   }
 }
 
-module "sg" {
-  source        = "../../modules/sg"
-  aws_region    = local.aws_region
-  vpc_id        = local.vpc_id
-  sg_name       = local.sg_name
-  allowed_ports = local.allowed_ports
-  tags          = local.tags
+module "sg-open-all-ports" {
+  source     = "../../modules/sg-open-all-ports"
+  aws_region = local.aws_region
+  vpc_id     = local.vpc_id
+  sg_name    = local.sg_name
+  tags       = local.tags
 }
