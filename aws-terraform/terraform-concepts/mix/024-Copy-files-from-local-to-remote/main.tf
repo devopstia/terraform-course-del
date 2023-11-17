@@ -1,45 +1,45 @@
 provider "aws" {
-	region = "us-east-1"
+  region = "us-east-1"
 }
 
 resource "aws_instance" "web" {
-	ami           = "ami-04bf6dcdc9ab498ca"
-	instance_type = "t2.micro"
-	key_name      = "jenkins-key"
-	
-	tags = {
-		Name = "test"
-	}
+  ami           = "ami-04bf6dcdc9ab498ca"
+  instance_type = "t2.micro"
+  key_name      = "terraform-aws"
 
-	connection {
-		type        = "ssh"
-		host        = aws_instance.web.public_ip
-		user        = "ec2-user"
-		private_key = file("C:\\Users\\Owner\\Downloads\\jenkins-key.pem")
-		# Default timeout is 5 minutes
-		timeout     = "4m"
-	}
+  tags = {
+    Name = "test"
+  }
 
-	provisioner "file" {
-		source      = "C:\\Users\\Owner\\Downloads\\jenkins-key.pem"
-		destination = "/tmp/jenkins-key.pem"
-		
-	}
+  connection {
+    type        = "ssh"
+    host        = aws_instance.web.public_ip
+    user        = "ec2-user"
+    private_key = file("C:\\Users\\Owner\\Downloads\\terraform-aws.pem")
+    # Default timeout is 5 minutes
+    timeout = "4m"
+  }
 
-	provisioner "file" {
-		source      = "httpd.sh"
-		destination = "/tmp/httpd.sh"
-		
-	}
+  provisioner "file" {
+    source      = "C:\\Users\\Owner\\Downloads\\terraform-aws.pem"
+    destination = "/tmp/terraform-aws.pem"
 
-	provisioner "remote-exec" {
-		inline = [
-			"cd /tmp",
-			"sudo chmod 600 jenkins-key.pem",
-			"sudo chmod +x httpd.sh",
-			"sudo bash httpd.sh"
-		]
-	}
+  }
+
+  provisioner "file" {
+    source      = "httpd.sh"
+    destination = "/tmp/httpd.sh"
+
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cd /tmp",
+      "sudo chmod 600 terraform-aws.pem",
+      "sudo chmod +x httpd.sh",
+      "sudo bash httpd.sh"
+    ]
+  }
 }
 
 

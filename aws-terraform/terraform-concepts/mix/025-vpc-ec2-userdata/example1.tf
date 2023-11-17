@@ -1,5 +1,5 @@
 provider "aws" {
-    region = "us-east-1"
+  region = "us-east-1"
 }
 
 # 1. Create a vpc
@@ -24,7 +24,7 @@ resource "aws_internet_gateway" "igw" {
 # 3. Create custom route table
 resource "aws_route_table" "PordRouteTable" {
   vpc_id = aws_vpc.ProdVpc.id
- route {
+  route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
@@ -35,7 +35,7 @@ resource "aws_route_table" "PordRouteTable" {
 
 # 4. Create a subnet
 resource "aws_subnet" "PuiblicSubnet1" {
-  vpc_id            =  aws_vpc.ProdVpc.id
+  vpc_id            = aws_vpc.ProdVpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
   tags = {
@@ -52,39 +52,39 @@ resource "aws_route_table_association" "a" {
 
 # 6- Create a SG and allow port 22, 80, 443
 resource "aws_security_group" "allow-web" {
-    name              = "all_web_traffic"
-    description       = "Allow port 22, 80, 443"
-    vpc_id            = aws_vpc.ProdVpc.id
-    ingress {
-        description       = "HTTPS"
-        from_port         = 443
-        to_port           = 443
-        protocol          = "tcp"
-        cidr_blocks       = ["0.0.0.0/0"]
-    }
-     ingress {
-        description       = "HTTP"
-        from_port         = 80
-        to_port           = 80
-        protocol          = "tcp"
-        cidr_blocks       = ["0.0.0.0/0"]
-    }
-     ingress {
-        description       = "SSH"
-        from_port         = 22
-        to_port           = 22
-        protocol          = "tcp"
-        cidr_blocks       = ["0.0.0.0/0"]
-    }
-    egress {
-        from_port         = 0
-        to_port           = 0
-        protocol          = "-1"
-        cidr_blocks       = ["0.0.0.0/0"]
-    }
-    tags = {
-        Name = "SG-web"
-    }
+  name        = "all_web_traffic"
+  description = "Allow port 22, 80, 443"
+  vpc_id      = aws_vpc.ProdVpc.id
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "SG-web"
+  }
 }
 
 # 7. Create a network interface with an ip in the subnet that was created in step 4
@@ -114,7 +114,7 @@ resource "aws_instance" "web-server-instance" {
   ami               = "ami-0dba2cb6798deb6d8"
   instance_type     = "t2.micro"
   availability_zone = "us-east-1a"
-  key_name          = "jenkins-key"
+  key_name          = "terraform-aws"
 
   network_interface {
     device_index         = 0 # first interface (eth0, eth1 ...)

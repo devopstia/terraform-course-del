@@ -20,7 +20,7 @@ variable "instance_types" {
 
 variable "key_names" {
   type    = list(string)
-  default = ["jenkins-key", "jenkins-key", "jenkins-key"]
+  default = ["terraform-aws", "terraform-aws", "terraform-aws"]
 }
 
 resource "aws_instance" "example" {

@@ -23,7 +23,7 @@ resource "aws_instance" "example" {
 
   ami                    = var.create_instance ? "ami-0fc5d935ebf8bc3bc" : null
   instance_type          = var.create_instance ? "t2.micro" : null
-  key_name               = var.create_instance ? "jenkins-key" : null
+  key_name               = var.create_instance ? "terraform-aws" : null
   vpc_security_group_ids = var.create_instance ? ["sg-0c51540c60857b7ed"] : []
   subnet_id              = var.create_instance ? "subnet-096d45c28d9fb4c14" : null
 

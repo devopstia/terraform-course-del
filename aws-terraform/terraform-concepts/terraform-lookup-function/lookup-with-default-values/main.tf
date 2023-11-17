@@ -17,7 +17,7 @@ variable "vm" {
     # subnet_id              = "subnet-096d45c28d9fb4c14"
     ami                    = "ami-0fc5d935ebf8bc3bc"
     vpc_security_group_ids = "sg-0c51540c60857b7ed"
-    key_name               = "jenkins-key"
+    key_name               = "terraform-aws"
     volume_size            = "10"
   }
 }

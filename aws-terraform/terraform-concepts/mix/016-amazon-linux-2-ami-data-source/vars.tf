@@ -4,6 +4,6 @@ variable "region" {
 }
 
 variable "keyname" {
-  default = "jenkins-key"
+  default = "terraform-aws"
 }
 

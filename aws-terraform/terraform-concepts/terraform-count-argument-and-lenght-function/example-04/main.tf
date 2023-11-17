@@ -31,7 +31,7 @@ variable "instance_configurations" {
     {
       ami                    = "ami-0fc5d935ebf8bc3bc"
       instance_type          = "t2.micro"
-      key_name               = "jenkins-key"
+      key_name               = "terraform-aws"
       subnet_id              = "subnet-096d45c28d9fb4c14"
       vpc_security_group_ids = ["sg-12345678"]
       tags = {

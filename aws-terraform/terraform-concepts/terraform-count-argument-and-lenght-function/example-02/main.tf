@@ -24,7 +24,7 @@ variable "instance_type" {
 
 variable "key_name" {
   type    = string
-  default = "jenkins-key"
+  default = "terraform-aws"
 }
 
 resource "aws_instance" "example" {

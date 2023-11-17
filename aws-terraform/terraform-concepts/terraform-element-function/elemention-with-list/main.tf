@@ -31,7 +31,7 @@ variable "subnet_id" {
 resource "aws_instance" "example" {
   ami                    = "ami-0fc5d935ebf8bc3bc"
   instance_type          = element(var.instance_types, 1) # Select the third instance type in the list
-  key_name               = "jenkins-key"
+  key_name               = "terraform-aws"
   vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
   subnet_id              = element(var.subnet_id, 0)
   availability_zone      = element(var.availability_zones, 0) # Select the first AZ in the list

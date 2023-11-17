@@ -20,7 +20,7 @@ variable "ec2_instance_type" {
 variable "ec2_instance_key_name" {
   type        = string
   description = "Name of the key pair for the EC2 instance"
-  default     = "jenkins-key"
+  default     = "terraform-aws"
 }
 
 variable "security_group_ids" {

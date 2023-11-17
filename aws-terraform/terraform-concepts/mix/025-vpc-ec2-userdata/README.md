@@ -177,7 +177,7 @@ resource "aws_instance" "web-server-instance" {
   ami               = "ami-0dba2cb6798deb6d8"
   instance_type     = "t2.micro"
   availability_zone = "us-east-1a"
-  key_name          = "jenkins-key"
+  key_name          = "terraform-aws"
 
   network_interface {
     device_index         = 0 # first interface (eth0, eth1 ...)
