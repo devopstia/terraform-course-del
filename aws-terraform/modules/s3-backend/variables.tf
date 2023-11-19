@@ -3,7 +3,7 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "tags" {
+variable "common_tags" {
   type = map(any)
   default = {
     "id"             = "2560"

@@ -1,8 +1,3 @@
-variable "aws_region" {
-  type    = string
-  default = "us-east-1"
-}
-
 variable "tags" {
   type = map(any)
   default = {
@@ -15,3 +10,29 @@ variable "tags" {
     "cloud_provider" = "aws"
   }
 }
+
+variable "aws_region" {
+  type    = string
+  default = "us-east-1"
+}
+
+variable "aws-ebs-csi-driver-sa" {
+  type    = string
+  default = "aws-ebs-csi-driver-sa"
+}
+
+variable "aws-ebs-csi-driver-ns" {
+  type    = string
+  default = "aws-ebs-csi-driver"
+}
+
+variable "eks-controle-plane-name" {
+  type    = string
+  default = "2560-dev-del"
+}
+
+variable "storage-class-name" {
+  type    = string
+  default = "terraform-storage-class"
+}
+

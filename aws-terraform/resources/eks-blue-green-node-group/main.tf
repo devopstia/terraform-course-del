@@ -42,11 +42,11 @@ locals {
   blue  = false
   green = true
 
-  ec2_ssh_key               = "terraform"
+  ec2_ssh_key               = "terraform-aws"
   deployment_nodegroup      = "blue_green"
   capacity_type             = "ON_DEMAND"
   ami_type                  = "AL2_x86_64"
-  instance_types            = "t2.micro"
+  instance_types            = "t2.medium"
   disk_size                 = "10"
   shared_owned              = "shared"
   enable_cluster_autoscaler = "true"

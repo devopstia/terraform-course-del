@@ -7,7 +7,7 @@ resource "aws_subnet" "public" {
 
   tags = merge(var.tags, {
     Name                                        = format("%s-%s-%s-public-subnet-${count.index + 1}-${element(var.availability_zones, count.index)}", var.tags["id"], var.tags["environment"], var.tags["project"])
-    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/role/elb"                    = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     },
   )

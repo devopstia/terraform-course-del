@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca-demo-deployment
+  labels:
+    app: ca-app
+spec:
+  replicas: 1
+  # replicas: 10
+  selector:
+    matchLabels:
+      app: ca-app
+  template:
+    metadata:
+      labels:
+        app: ca-app
+    spec:
+      containers:
+      - name: ca-app
+        image: leonardtia/tia:microservices
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "200m"       
+            memory: "200Mi"            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ca-demo-service-app
+  labels:
+    app: ca-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: ca-app
+  ports:
+  - port: 80
+    targetPort: 80
