@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-deployment
+  labels:
+    app: static
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static
+  template:
+    metadata:
+      labels:
+        app: static
+    spec:
+      containers:
+        - name: static
+          image: leonardtia/tia:microservices
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: static-nodeport-service
+  labels:
+    app: static
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /static/index.html
+spec:
+  type: NodePort # or ClusterIP
+  selector:
+    app: static
+  ports:
+    - port: 80
+      targetPort: 80
+
+   

@@ -24,10 +24,12 @@ terraform {
 locals {
   aws_region = "us-east-1"
   aws-secret-string = [
-    "mysql-db-password",
-    "postges-aurora-db-password",
-    "postgres-db",
-    "mysql-aurora-db-password"
+    # "mysql-db-password",
+    # "postges-aurora-db-password",
+    # "postgres-db",
+    # "mysql-aurora-db-password"
+    "artifactory-db-username",
+    "artifactory-db-password"
   ]
 
   tags = {

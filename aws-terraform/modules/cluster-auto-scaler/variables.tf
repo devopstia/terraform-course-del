@@ -15,3 +15,18 @@ variable "tags" {
     "cloud_provider" = "aws"
   }
 }
+
+variable "cluster-autoscaler-sa" {
+  type    = string
+  default = "cluster-autoscaler-sa"
+}
+
+variable "cluster-autoscaler-ns" {
+  type    = string
+  default = "cluster-autoscaler"
+}
+
+variable "eks-controle-plane-name" {
+  type    = string
+  default = "2560-dev-del"
+}
