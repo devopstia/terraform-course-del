@@ -4,7 +4,7 @@
 resource "helm_release" "cluster_autoscaler_release" {
   depends_on = [aws_iam_role.cluster-autoscaler]
   name       = var.cluster-autoscaler-ns
-
+  # https://github.com/kubernetes/autoscaler
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
 

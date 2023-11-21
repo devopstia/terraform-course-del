@@ -1,0 +1,16 @@
+image:
+  repository: registry.k8s.io/metrics-server/metrics-server
+  tag: ""
+  pullPolicy: IfNotPresent
+
+fullnameOverride: "metrics-server"
+
+serviceAccount:
+  create: true
+  name: ""
+  
+rbac:
+  create: true
+
+nodeSelector: 
+  deployment_nodegroup: blue_green

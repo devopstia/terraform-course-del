@@ -1,0 +1,45 @@
+
+# Data agent settings
+fullnameOverride:  "datadog"
+targetSystem: "linux"
+datadog:
+  apiKey:  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  # clusterName: 2560-dev-del # Cluster name should not start with numbers. We can ignore ir in this file
+
+  # nodeSelector:
+  # deployment_nodegroup: blue_green
+
+  resources: 
+    requests:
+      cpu: 50m
+      memory: 50Mi
+    limits:
+      cpu: 100m
+      memory: 100Mi
+
+  kubeStateMetricsEnabled: true
+  kubeStateMetricsNetworkPolicy:
+    create: true
+
+# kube-state-metrics settings
+kube-state-metrics:
+  image:
+   repository: k8s.gcr.io/kube-state-metrics/kube-state-metrics
+   tag: v1.9.8
+   pullPolicy: IfNotPresent
+
+  fullnameOverride: kube-state-metrics
+
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
+  resources: 
+    requests:
+      cpu: 50m
+      memory: 50Mi
+    limits:
+      cpu: 100m
+      memory: 100Mi
+  # nodeSelector:
+  #   deployment_nodegroup: blue_green

@@ -2,7 +2,7 @@
 resource "helm_release" "external_dns" {
   depends_on = [aws_iam_role.external-dns]
   name       = var.external-dns-ns
-
+  # https://github.com/bitnami/charts
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
 

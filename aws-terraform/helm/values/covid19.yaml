@@ -1,0 +1,31 @@
+replicaCount: 3
+image:
+  repository: leonardtia/devops-pro-repos
+  pullPolicy: IfNotPresent
+  tag: "covid19"
+
+
+fullnameOverride: "covid19"
+
+service:
+  type: LoadBalancer
+  port: 80
+
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector:
+  deployment_nodegroup: blue_green
+

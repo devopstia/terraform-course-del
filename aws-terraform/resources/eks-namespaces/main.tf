@@ -36,6 +36,7 @@ locals {
     "argocd",
     "security",
     "jenkins",
+    "argo-cd",
   ]
 
   tags = {

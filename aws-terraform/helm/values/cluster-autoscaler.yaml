@@ -1,0 +1,41 @@
+autoDiscovery:
+  clusterName: eks
+
+awsRegion: us-east-1
+
+extraArgs:
+  scale-down-delay-after-add: 2m
+  scale-down-unneeded-time: 2m
+
+fullnameOverride: "cluster-autoscaler"
+
+image:
+  repository: k8s.gcr.io/autoscaling/cluster-autoscaler
+  tag: v1.23.0
+  pullPolicy: IfNotPresent
+
+nodeSelector: {}
+podDisruptionBudget:
+  maxUnavailable: 1
+  # minAvailable: 2
+
+# priorityClassName: "system-cluster-critical"
+
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 300Mi
+  requests:
+    cpu: 100m
+    memory: 300Mi
+
+updateStrategy: 
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+  type: RollingUpdate
+
+nodeSelector:
+  deployment_nodegroup: blue_green

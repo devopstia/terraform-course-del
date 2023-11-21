@@ -26,7 +26,7 @@ locals {
   aws-load-balancer-controller-sa = "aws-load-balancer-controller-sa"
   aws-load-balancer-controller-ns = "kube-system"
   eks-controle-plane-name         = "2560-dev-del"
-  vpc_id                          = "vpc-068852590ea4b093b"
+  vpc_id                          = "vpc-0316c5e1432589c37"
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
@@ -44,5 +44,6 @@ module "aws-load-balancer-controller" {
   aws-load-balancer-controller-sa = local.aws-load-balancer-controller-sa
   aws-load-balancer-controller-ns = local.aws-load-balancer-controller-ns
   eks-controle-plane-name         = local.eks-controle-plane-name
+  vpc_id                          = local.vpc_id
   tags                            = local.tags
 }

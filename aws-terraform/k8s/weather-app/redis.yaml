@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpha-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alpha-redis
+  template:
+    metadata:
+      labels:
+        app: alpha-redis
+    spec:
+      containers:
+        - name: alpha-redis
+          image: devopseasylearning/apha-redis:latest
+          imagePullPolicy: Always  # Set the image pull policy to Always
+          env:
+            - name: REDIS_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap  
+                  key: REDIS_USER
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: REDIS_PASSWORD
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+      volumes:
+        - name: redis-data
+          hostPath:
+            path: /data/redis-data
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpha-redis-service
+spec:
+  selector:
+    app: alpha-redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+  type: ClusterIP

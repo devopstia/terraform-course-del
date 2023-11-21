@@ -26,7 +26,7 @@ locals {
   aws-ebs-csi-driver-sa   = "aws-ebs-csi-driver-sa"
   aws-ebs-csi-driver-ns   = "aws-ebs-csi-driver"
   eks-controle-plane-name = "2560-dev-del"
-  storage-class-name      = "terraform-storage-class"
+  storage-class-name      = "2560-dev-del"
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"

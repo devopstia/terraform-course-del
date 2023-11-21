@@ -1,0 +1,59 @@
+=== Kube2iam
+
+==== Why
+Kube2iam allows a pod to assume a role as long as the node it runs on has been given the "sts:AssumRole" permission on that role. The roll must trust the node profile arn "principle"
+
+==== How
+You can create the Role via CFT or Terraform making sure to include the principle of the cluster nodes you are connecting to. The principle node role can be found in the SSM parameter store located:
+
+```
+Format:
+/{AssetID}/{AssetAreaName}/{ResourceType}/{ResourceName}/{Name}
+Example:
+/2624/pecs/eks/dev-pecs/node-iam-profile-arn
+```
+
+==== Example Install
+To install the helm chart for kube2iam
+```
+Assuming to run from the helm directory
+
+helm install ./charts/kube2iam --name kube2iam --namespace kube2iam --values ./values/common/kube2iam.yaml
+```
+==== Example Deploy
+Once kube2iam is deploy and you have both the trust enabled in your role you can then add the annotation to the deployment to assume that role.
+
+Example of Deployment
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    name: landonkt-nginx
+  annotations:
+    iam.amazonaws.com/role: k8s-pecs-testing-assume
+spec:
+  containers:
+  - image: nginx
+    name: landonkt-nginx
+  nodeSelector:
+    deployment.group: testnodes
+
+```
+Verify that the pod got the correct role
+```
+▶ kubectl exec -ti nginx /bin/bash
+root@nginx:/# apt-get update
+Ign:1 http://cdn-fastly.deb.debian.org/debian stretch InRelease
+Get:2 http://cdn-fastly.deb.debian.org/debian stretch-updates InRelease [91.0 kB]
+Hit:3 http://cdn-fastly.deb.debian.org/debian stretch Release
+Hit:5 http://security-cdn.debian.org/debian-security stretch/updates InRelease
+Fetched 91.0 kB in 1s (88.8 kB/s)
+Reading package lists... Done
+root@nginx:/# curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
+k8s-pecs-testing-assume
+root@nginx:/#
+
+
+```

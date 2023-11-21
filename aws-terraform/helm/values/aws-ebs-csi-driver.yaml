@@ -1,0 +1,51 @@
+image:
+  repository: public.ecr.aws/ebs-csi-driver/aws-ebs-csi-driver
+  tag: ""
+  pullPolicy: IfNotPresent
+
+fullnameOverride: "aws-ebs-csi-driver"
+
+controller:
+  region: us-east-1
+  replicaCount: 2
+
+  updateStrategy: 
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 0
+    maxUnavailable: 1
+
+  resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+node:
+  nodeSelector: 
+    deployment_nodegroup: blue_green
+  podAnnotations:
+    iam.amazonaws.com/role: aws-ebs-csi-driver-role
+  serviceAccount:
+    create: true
+    name: ebs-csi-node-sa
+    annotations:
+      iam.amazonaws.com/role: aws-ebs-csi-driver-role
+
+serviceAccount:
+    create: true 
+    name: ebs-csi-driver-sa
+  
+storageClasses:
+  - name: ebs-gp3-helm
+    annotations:
+      storageclass.kubernetes.io/is-default-class: "false"
+    volumeBindingMode: WaitForFirstConsumer
+    reclaimPolicy: Delete
+    allowVolumeExpansion: true
+    parameters:
+      encrypted: "true"
+      fsType: ext4
+      type: gp3

@@ -28,10 +28,16 @@ locals {
   endpoint_private_access = false
   endpoint_public_access  = true
 
+  # public_subnets = {
+  #   us-east-1a = "subnet-096d45c28d9fb4c14"
+  #   us-east-1b = "subnet-05f285a35173783b0"
+  #   us-east-1c = "subnet-0fe3255479ad7c3a4"
+  # }
+
   public_subnets = {
-    us-east-1a = "subnet-096d45c28d9fb4c14"
-    us-east-1b = "subnet-05f285a35173783b0"
-    us-east-1c = "subnet-0fe3255479ad7c3a4"
+    us-east-1a = "subnet-0ae692e4e1d26f3b4"
+    us-east-1b = "subnet-02bf0c3a3fd83071f"
+    us-east-1c = "subnet-0f5449f8eb943a4ad"
   }
 
   tags = {

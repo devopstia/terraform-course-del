@@ -1,0 +1,34 @@
+{{- if .Values.admissionController.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  # name: {{ include "vertical-pod-autoscaler.admissionController.fullname" . }}
+  name: vpa-webhook
+  labels:
+    {{- include "vertical-pod-autoscaler.admissionController.labels" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.admissionController.service.annotations .Values.commonAnnotations }}
+  annotations:
+    {{- if .Values.admissionController.service.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.admissionController.service.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.admissionController.service.type }}
+  {{- if and (eq .Values.admissionController.service.type "ClusterIP") .Values.admissionController.service.clusterIP }}
+  clusterIP: {{ .Values.admissionController.service.clusterIP }}
+  {{- end }}
+  ports:
+    # - port: {{ .Values.admissionController.service.port }}
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+  selector:
+    {{- include "vertical-pod-autoscaler.admissionController.selectorLabels" . | nindent 4 }}
+{{- end }}
