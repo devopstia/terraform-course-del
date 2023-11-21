@@ -1,6 +1,6 @@
 resource "kubernetes_storage_class" "aws-gp2-storage-class" {
   metadata {
-    name = "ebs-gp3-storage-class-create-by-terraform"
+    name = var.storage-class-name
     annotations = {
       "storageclass.kubernetes.io/is-default-class" = "false"
     }

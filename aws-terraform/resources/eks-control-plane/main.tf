@@ -35,9 +35,9 @@ locals {
   # }
 
   public_subnets = {
-    us-east-1a = "subnet-09b0e010cce6af339"
-    us-east-1b = "subnet-085f142b789f5d390"
-    us-east-1c = "subnet-0f9cfc106ddc64214"
+    us-east-1a = "subnet-0ae692e4e1d26f3b4"
+    us-east-1b = "subnet-02bf0c3a3fd83071f"
+    us-east-1c = "subnet-0f5449f8eb943a4ad"
   }
 
   tags = {

@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: alpha-db-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete #Retain
+  storageClassName: 2560-dev-del  # Ensure this matches your storage class
+  hostPath:
+    path: /mysql_data  # Replace with your actual host path or storage location
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: alpha-db-statefulset
+spec:
+  selector:
+    matchLabels:
+      app: alpha-db
+  serviceName: alpha-db-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alpha-db
+    spec:
+      containers:
+        - name: alpha-db
+          image: devopseasylearning/apha-db:latest
+          imagePullPolicy: Always
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets     
+                  key: MYSQL_ROOT_PASSWORD 
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets     
+                  key: MYSQL_PASSWORD     
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap  
+                  key: MYSQL_DATABASE    
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap  
+                  key: MYSQL_USER        
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        storageClassName: 2560-dev-del
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        dataSource:
+          name: alpha-db-pv
+          kind: PersistentVolumeClaim
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpha-db-service
+spec:
+  selector:
+    app: alpha-db
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP

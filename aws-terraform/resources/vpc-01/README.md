@@ -1,7 +1,7 @@
 ## Local Reference
 ```s
-module "vpc" {
-  source             = "../../modules/vpc"
+module "vpc-01" {
+  source             = "../../modules/vpc-01"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones
@@ -13,8 +13,8 @@ module "vpc" {
 ## SSH Local Reference From Github
 - You must use ssh key to authentication if it is a private repository
 ```s
-module "vpc" {
-  source             = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
+module "vpc-01" {
+  source             = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc-01?ref=main"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones
@@ -27,8 +27,8 @@ module "vpc" {
 ## HTTPS Local Reference From Github
 - You must use token to authentication if it is a private repository
 ```s
-module "vpc" {
-  source             = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
+module "vpc-01" {
+  source             = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc-01?ref=main"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones
@@ -39,8 +39,8 @@ module "vpc" {
 
 
 ## Add tags
-- add the below tags if you are using the default VPC so that the aws-load-balancer-controller can discover the subnets
-- This should be perfect for all public subnet for default vpc: "kubernetes.io/role/elb" = 1
+- add the below tags if you are using the default VPC-01 so that the aws-load-balancer-controller can discover the subnets
+- This should be perfect for all public subnet for default vpc-01: "kubernetes.io/role/elb" = 1
 
 ```s
 public_subnet_tags = {

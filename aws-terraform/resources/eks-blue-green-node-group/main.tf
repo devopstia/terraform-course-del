@@ -32,9 +32,9 @@ locals {
   # }
 
   private_subnets = {
-    us-east-1a = "subnet-0589f2d749175981a"
-    us-east-1b = "subnet-0186a7959f9f114cb"
-    us-east-1c = "subnet-066c45b90190d368a"
+    us-east-1a = "subnet-0346f91f492ccfaa8"
+    us-east-1b = "subnet-0d4e63819baf2844c"
+    us-east-1c = "subnet-02622d73204514286"
   }
 
   eks_version  = "1.24"

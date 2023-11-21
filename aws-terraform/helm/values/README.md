@@ -32,7 +32,7 @@ helm repo update
 helm fetch argo/argo-cd --untar
 
 kubectl create ns argo-cd
-helm upgrade argo-cd --install ../../charts/argo-cd --values argo-cd.yaml --namespace argo-cd
+helm upgrade argo-cd --install ../charts/argo-cd --values argo-cd.yaml --namespace argo-cd
 kubectl get po -n argo-cd
 kubectl get svc -n argo-cd
 
@@ -54,29 +54,31 @@ kubectl delete crd applications.argoproj.io
 ## cluster-autoscaler
 ```
 kubectl create ns cluster-autoscaler
-helm upgrade cluster-autoscaler --install ../../charts/cluster-autoscaler --values cluster-autoscaler.yaml --namespace cluster-autoscaler
+helm upgrade cluster-autoscaler --install ../charts/cluster-autoscaler --values cluster-autoscaler.yaml --namespace cluster-autoscaler
 ```
 
 ## aws-load-balancer-controller
 ```
-helm upgrade aws-load-balancer-controller --install ../../charts/aws-load-balancer-controller --values aws-load-balancer-controller.yaml --namespace kube-system
+helm upgrade aws-load-balancer-controller --install ../charts/aws-load-balancer-controller --values aws-load-balancer-controller.yaml --namespace kube-system
 ```
 
 ## aws-ebs-csi-driver
 ```
 kubectl create ns aws-ebs-csi-driver
-helm upgrade aws-ebs-csi-driver --install ../../charts/aws-ebs-csi-driver --values aws-ebs-csi-driver.yaml --namespace aws-ebs-csi-driver
+helm upgrade aws-ebs-csi-driver --install ../charts/aws-ebs-csi-driver --values aws-ebs-csi-driver.yaml --namespace aws-ebs-csi-driver
+
+helm uninstall aws-ebs-csi-driver  -n  aws-ebs-csi-driver
 ```
 
 ## external-dns
 ```
 kubectl create ns external-dns
-helm upgrade external-dns --install ../../charts/external-dns --values external-dns.yaml --namespace external-dns
+helm upgrade external-dns --install ../charts/external-dns --values external-dns.yaml --namespace external-dns
 ```
 
 ## metrics-server
 ```
-helm upgrade metrics-server --install ../../charts/metrics-server --values metrics-server.yaml --namespace kube-system
+helm upgrade metrics-server --install ../charts/metrics-server --values metrics-server.yaml --namespace kube-system
 
 helm uninstall metrics-server 
 ```
@@ -84,13 +86,13 @@ helm uninstall metrics-server
 ## ns aws-efs-csi-driver
 ```
 kubectl create ns aws-efs-csi-driver
-helm upgrade aws-efs-csi-driver --install ../../charts/aws-efs-csi-driver --values aws-efs-csi-driver.yaml --namespace aws-efs-csi-driver
+helm upgrade aws-efs-csi-driver --install ../charts/aws-efs-csi-driver --values aws-efs-csi-driver.yaml --namespace aws-efs-csi-driver
 ```
 
 ## covid19
 ```
 kubectl create ns covid19
-helm upgrade covid19 --install ../../charts/applications --values covid19.yaml --namespace covid19
+helm upgrade covid19 --install ../charts/applications --values covid19.yaml --namespace covid19
 
 kubectl label namespace covid19 istio-injection=enabled
 ```
@@ -98,7 +100,7 @@ kubectl label namespace covid19 istio-injection=enabled
 ## articles
 ```
 kubectl create ns articles
-helm upgrade articles --install ../../charts/applications --values articles.yaml --namespace articles
+helm upgrade articles --install ../charts/applications --values articles.yaml --namespace articles
 
 kubectl label namespace articles istio-injection=enabled
 ```
@@ -106,7 +108,7 @@ kubectl label namespace articles istio-injection=enabled
 ## kube2iam
 ```
 kubectl create ns kube2iam
-helm upgrade kube2iam --install ../../charts/kube2iam --values kube2iam.yaml --namespace kube2iam
+helm upgrade kube2iam --install ../charts/kube2iam --values kube2iam.yaml --namespace kube2iam
 ```
 
 ## datadog 
@@ -122,7 +124,7 @@ datadog:
 
 ```
 kubectl create ns datadog
-helm upgrade datadog --install ../../charts/datadog --values datadog.yaml --namespace datadog
+helm upgrade datadog --install ../charts/datadog --values datadog.yaml --namespace datadog
 kubectl get po -n datadog
 helm uninstall datadog --namespace datadog
 ``` 
@@ -139,7 +141,7 @@ helm fetch cowboysysop/vertical-pod-autoscaler --untar
 ```
 ```
 kubectl create ns vertical-pod-autoscaler
-helm upgrade vertical-pod-autoscaler --install ../../charts/vertical-pod-autoscaler --values vertical-pod-autoscaler.yaml --namespace kube-system
+helm upgrade vertical-pod-autoscaler --install ../charts/vertical-pod-autoscaler --values vertical-pod-autoscaler.yaml --namespace kube-system
 ```
 
 ## goldilocks
@@ -155,7 +157,7 @@ helm fetch fairwinds-stable/goldilocks --untar
 
 ```
 kubectl create ns goldilocks
-helm upgrade goldilocks --install ../../charts/goldilocks --values goldilocks.yaml --namespace goldilocks
+helm upgrade goldilocks --install ../charts/goldilocks --values goldilocks.yaml --namespace goldilocks
 ```
 
 ```sh

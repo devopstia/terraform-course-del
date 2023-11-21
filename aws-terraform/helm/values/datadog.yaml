@@ -3,7 +3,7 @@
 fullnameOverride:  "datadog"
 targetSystem: "linux"
 datadog:
-  apiKey:  a795dfaa4bada83b2ac458de71bde5f9
+  apiKey:  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   # clusterName: 2560-dev-del # Cluster name should not start with numbers. We can ignore ir in this file
 
   # nodeSelector:

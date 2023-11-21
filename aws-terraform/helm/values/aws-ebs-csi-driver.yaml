@@ -39,7 +39,7 @@ serviceAccount:
     name: ebs-csi-driver-sa
   
 storageClasses:
-  - name: ebs-gp3-storage-provision-by-ebs-csi-driver
+  - name: ebs-gp3-helm
     annotations:
       storageclass.kubernetes.io/is-default-class: "false"
     volumeBindingMode: WaitForFirstConsumer

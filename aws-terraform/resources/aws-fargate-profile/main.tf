@@ -1,5 +1,5 @@
 provider "aws" {
-  region = local.region
+  region = local.aws_region
 }
 
 terraform {
@@ -22,16 +22,18 @@ terraform {
 # }
 
 locals {
-  region       = "us-east-1"
+  aws_region   = "us-east-1"
   cluster_name = "2560-dev-del"
-  # cidr_block   = "10.0.0.0/16"
-  cidr_block = "10.10.0.0/16"
-  availability_zones = [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c"
-  ]
+  private_subnets = {
+    us-east-1a = "subnet-0346f91f492ccfaa8"
+    us-east-1b = "subnet-0d4e63819baf2844c"
+    us-east-1c = "subnet-02622d73204514286"
+  }
 
+  fargate-profiles = [
+    # "external-dns",
+    "app",
+  ]
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
@@ -43,11 +45,11 @@ locals {
   }
 }
 
-module "vpc" {
-  source             = "../../modules/vpc"
-  cidr_block         = local.cidr_block
-  region             = local.region
-  availability_zones = local.availability_zones
-  cluster_name       = local.cluster_name
-  tags               = local.tags
+module "aws-fargate-profile" {
+  source           = "../../modules/aws-fargate-profile"
+  aws_region       = local.aws_region
+  cluster_name     = local.cluster_name
+  private_subnets  = local.private_subnets
+  fargate-profiles = local.fargate-profiles
+  tags             = local.tags
 }
