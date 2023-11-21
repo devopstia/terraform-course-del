@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks-fargate-profile" {
-  name = format("%s-%s-%s-kube-system-fargate-profile-role", var.common_tags["AssetID"], var.common_tags["Environment"], var.common_tags["Project"])
+  name = format("%s-%s-%s-kube-system-fargate-profile-role", var.common_tags["id"], var.common_tags["environment"], var.common_tags["project"])
 
   assume_role_policy = jsonencode({
     Statement = [{

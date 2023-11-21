@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks_cluster" {
-  name               = format("%s-%s-%s-control-plane-role", var.tags["id"], var.tags["environment"], var.tags["project"])
+  name               = format("%s-%s-%s-control-plane-role", var.common_tags["id"], var.common_tags["environment"], var.common_tags["project"])
   assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "amazon_eks_cluster_policy" {
 }
 
 resource "aws_eks_cluster" "eks" {
-  name     = format("%s-%s-%s", var.tags["id"], var.tags["environment"], var.tags["project"])
+  name     = format("%s-%s-%s", var.common_tags["id"], var.common_tags["environment"], var.common_tags["project"])
   role_arn = aws_iam_role.eks_cluster.arn
   version  = var.eks_version
 

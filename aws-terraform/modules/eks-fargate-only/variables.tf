@@ -1,4 +1,4 @@
-variable "tags" {
+variable "common_tags" {
   type        = map(string)
   description = "Common tags to be applied to resources"
   default = {

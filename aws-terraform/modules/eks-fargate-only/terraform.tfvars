@@ -1,9 +1,8 @@
 aws_region              = "us-east-1"
-cluster_name            = "2560-dev-del"
 eks_version             = 1.24
 endpoint_private_access = false
 endpoint_public_access  = true
-tags = {
+common_tags = {
   "id"             = "2560"
   "owner"          = "DevOps Easy Learning"
   "teams"          = "DEL"

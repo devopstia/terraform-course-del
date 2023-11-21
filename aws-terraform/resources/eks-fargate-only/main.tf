@@ -39,7 +39,7 @@ locals {
     us-east-1c = "subnet-0346f91f492ccfaa8"
   }
 
-  tags = {
+  common_tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
     "teams"          = "DEL"
@@ -58,5 +58,5 @@ module "eks-fargate-only" {
   endpoint_public_access  = local.endpoint_public_access
   public_subnets          = local.public_subnets
   private_subnets         = local.private_subnets
-  tags                    = local.tags
+  common_tags             = local.common_tags
 }
