@@ -15,9 +15,7 @@ unzip terraform_0.13.0_darwin_amd64.zip
 mv terraform tf13
 sudo cp ~/Downloads/tf13 /usr/local/bin
 tf13 --version
-```
 
-````
 wget https://releases.hashicorp.com/terraform/0.14.0/terraform_0.14.0_darwin_amd64.zip
 unzip terraform_0.14.0_darwin_amd64.zip
 mv terraform tf14
