@@ -1,0 +1,17 @@
+server:
+  service:
+    type: LoadBalancer
+
+  # nodeSelector:
+  # deployment_nodegroup: blue_green
+
+fullnameOverride: argocd
+
+
+# server:
+#   service:
+#     type: NodePort
+#     nodePorts:
+#       http: 30080
+#       https: 30443
+# fullnameOverride: argocd   

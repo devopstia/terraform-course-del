@@ -1,0 +1,43 @@
+affinity: {}
+aws:
+  access_key: ""
+  region: ""
+  secret_key: ""
+extraArgs:
+  auto-discover-base-arn:
+  auto-discover-default-role: true
+extraEnv: {}
+host:
+  interface: eni+
+  ip: $(HOST_IP)
+  iptables: true
+  port: 8181
+image:
+  pullPolicy: IfNotPresent
+  repository: jtblin/kube2iam
+  tag: 0.10.9
+nodeSelector: {}
+podAnnotations: {}
+podLabels: {}
+priorityClassName: ""
+probe: true
+prometheus:
+  serviceMonitor:
+    enabled: false
+    interval: 10s
+    namespace: ""
+rbac:
+  create: true
+  serviceAccountName: default
+  roleBindingName: kube2iam
+resources:
+  limits:
+    cpu: 2
+    memory: 2Gi
+  requests:
+    cpu: .25
+    memory: 128Mi
+tolerations: []
+updateStrategy: OnDelete
+verbose: false
+

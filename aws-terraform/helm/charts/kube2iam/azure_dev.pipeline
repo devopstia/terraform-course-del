@@ -1,0 +1,52 @@
+name: Dev PECS kube2iam CICD
+resources:
+    - repo: self
+
+jobs:
+  - job: Dev
+    pool: PECS-Dev
+    steps:
+        - task: JenkinsQueueJob@2
+          displayName: kube2iam Test
+          inputs:
+            serverEndpoint: 'PECS Dev'
+            jobName: helm/helmTest
+            captureConsole: true
+            capturePipeline: true
+            isParameterizedJob: true
+            jobParameters: "chart=kube2iam"
+        - task: JenkinsQueueJob@2
+          displayName: kube2iam Deploy Dev
+          inputs:
+            serverEndpoint: 'PECS Dev'
+            jobName: helm/helmDeploy
+            captureConsole: true
+            capturePipeline: true
+            isParameterizedJob: true
+            jobParameters: |
+              chart=kube2iam
+              cluster=dev-pecs
+  - job: prod
+    pool: PECS-Prod
+    dependsOn: Dev
+    condition: succeeded('Dev')
+    steps:
+        - task: JenkinsQueueJob@2
+          displayName: kube2iam Deploy Prod
+          inputs:
+            serverEndpoint: 'PECS Prod'
+            jobName: helm/helmDeploy
+            captureConsole: true
+            capturePipeline: true
+            isParameterizedJob: true
+            jobParameters: |
+              chart=kube2iam
+              cluster=prod-pecs
+trigger:
+    branches:
+      include:
+        - master
+    paths:
+      include:
+        - helm/charts/kube2iam/*
+        - helm/values/dev-pecs/kube2iam.yaml

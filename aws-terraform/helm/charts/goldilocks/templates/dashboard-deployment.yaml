@@ -1,0 +1,109 @@
+{{- if .Values.dashboard.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "goldilocks.fullname" . }}-dashboard
+  labels:
+    app.kubernetes.io/name: {{ include "goldilocks.name" . }}
+    helm.sh/chart: {{ include "goldilocks.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: dashboard
+    {{- if .Values.dashboard.deployment.additionalLabels }}
+    {{ toYaml .Values.dashboard.deployment.additionalLabels | nindent 4 }}
+    {{- end }}
+  {{- with .Values.dashboard.deployment.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.dashboard.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "goldilocks.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: dashboard
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "goldilocks.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: dashboard
+        {{- if .Values.dashboard.deployment.additionalLabels }}
+        {{ toYaml .Values.dashboard.deployment.additionalLabels | nindent 8 }}
+        {{- end }}
+      {{- with .Values.dashboard.deployment.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.dashboard.serviceAccount.create }}
+      serviceAccountName: {{ include "goldilocks.fullname" . }}-dashboard
+      {{- else }}
+      serviceAccountName: {{ .Values.dashboard.serviceAccount.name }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.dashboard.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /goldilocks
+            - dashboard
+            - --exclude-containers={{ .Values.dashboard.excludeContainers }}
+            - -v{{ .Values.dashboard.logVerbosity }}
+            {{- range $name, $value := .Values.dashboard.flags }}
+            - --{{ $name }}={{ $value }}
+            {{- end }}
+            {{- with .Values.dashboard.basePath }}
+            - --base-path
+            - {{ . }}
+            {{- end }}
+        {{- if .Values.dashboard.securityContext }}
+          securityContext:
+            {{- toYaml .Values.dashboard.securityContext | nindent 12 }}
+        {{- end }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{.Values.dashboard.basePath | default "" }}/health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: {{.Values.dashboard.basePath | default "" }}/health
+              port: http
+          resources:
+            {{- toYaml .Values.dashboard.resources | nindent 12 }}
+          {{- if .Values.dashboard.deployment.extraVolumeMounts }}
+          volumeMounts:
+          {{ toYaml .Values.dashboard.deployment.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+{{- if .Values.dashboard.deployment.extraVolumes }}
+      volumes:
+{{ toYaml .Values.dashboard.deployment.extraVolumes | indent 8}}
+{{- end }}
+      {{- with .Values.dashboard.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.dashboard.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.dashboard.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.controller.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+{{- end }}

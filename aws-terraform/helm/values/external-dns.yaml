@@ -1,0 +1,68 @@
+fullnameOverride: ""
+clusterDomain: cluster.local
+
+image:
+  registry: docker.io
+  repository: bitnami/external-dns
+  tag: 0.13.1-debian-11-r19
+  digest: ""
+  pullPolicy: IfNotPresent
+  
+updateStrategy:
+  type: Recreate
+
+# This will allow external-dans to create a loadbalancer from service and ingress
+sources:
+  # - crd
+  - service
+  - ingress
+  # - contour-httpproxy
+
+provider: aws
+
+aws:
+  region: "us-east-1"
+  zoneType: "public"
+
+domainFilters: []
+excludeDomains: []
+zoneNameFilters: []
+zoneIdFilters: []
+interval: "1m"
+
+# would prevent ExternalDNS from deleting any records, 
+# omit to enable full synchronization. if commented out, the record will be deleted automatically when you delete the external dns
+policy Modify how DNS records are synchronized between sources and providers (options: sync, upsert-only )
+policy: sync
+
+registry: "txt"
+txtOwnerId: ""
+forceTxtOwnerId: false
+affinity: {}
+
+nodeSelector: 
+  deployment_nodegroup: blue_green
+
+serviceAccount:
+  create: true
+  # This name must match with what is the terraform 
+  name: "external-dns-sa"
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::788210522308:role/eks-external-dns-iam-role
+
+rbac:
+  create: true
+  clusterRole: true
+  apiVersion: v1
+
+resources:
+ limits:
+   cpu: 200m
+   memory: 200Mi
+ requests:
+   memory: 50Mi
+   cpu: 25m
+
+replicas: 1
+
+podDisruptionBudget: {}

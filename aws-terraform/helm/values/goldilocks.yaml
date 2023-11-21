@@ -1,0 +1,67 @@
+# uninstallVPA -- Enabling this flag will remove a vpa installation that was previously managed with this chart. It is considered deprecated and will be removed in a later release.
+uninstallVPA: false
+
+vpa:
+  # vpa.enabled -- If true, the vpa will be installed as a sub-chart
+  enabled: false
+  updater:
+    enabled: false
+
+metrics-server:
+  # metrics-server.enabled -- If true, the metrics-server will be installed as a sub-chart
+  enabled: false
+  apiService:
+    create: true
+
+image:
+  repository: us-docker.pkg.dev/fairwinds-ops/oss/goldilocks
+  tag: v4.5.1
+  pullPolicy: Always
+
+fullnameOverride: "goldilocks"
+
+controller:
+  nodeSelector: {}
+  resources:
+    limits:
+      cpu: 25m
+      memory: 32Mi
+    requests:
+      cpu: 25m
+      memory: 32Mi
+
+dashboard:
+  replicaCount: 2
+  service:
+    type: LoadBalancer
+    port: 80
+
+  
+  ingress:
+    # dashboard.ingress.enabled -- Enables an ingress object for the dashboard.
+    enabled: false
+
+    # dashboard.ingress.ingressClassName -- From Kubernetes 1.18+ this field is supported in case your ingress controller supports it. When set, you do not need to add the ingress class as annotation.
+    ingressClassName:
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            type: ImplementationSpecific
+
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  resources:
+    limits:
+      cpu: 25m
+      memory: 32Mi
+    requests:
+      cpu: 25m
+      memory: 32Mi
+  nodeSelector: {}
+  

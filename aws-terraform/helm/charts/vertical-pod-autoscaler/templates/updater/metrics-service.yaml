@@ -1,0 +1,32 @@
+{{- if .Values.updater.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "vertical-pod-autoscaler.updater.metrics.fullname" . }}
+  labels:
+    {{- include "vertical-pod-autoscaler.updater.labels" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.updater.metrics.service.annotations .Values.commonAnnotations }}
+  annotations:
+    {{- if .Values.updater.metrics.service.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.updater.metrics.service.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.updater.metrics.service.type }}
+  {{- if and (eq .Values.updater.metrics.service.type "ClusterIP") .Values.updater.metrics.service.clusterIP }}
+  clusterIP: {{ .Values.updater.metrics.service.clusterIP }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.updater.metrics.service.port }}
+      targetPort: http-metrics
+      protocol: TCP
+      name: http-metrics
+  selector:
+    {{- include "vertical-pod-autoscaler.updater.selectorLabels" . | nindent 4 }}
+{{- end }}

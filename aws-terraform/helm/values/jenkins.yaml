@@ -1,0 +1,8 @@
+sonarqube:
+  image:
+    tag: "8.9.5-community"
+  replicaCount: 1
+postgresql:
+  postgresqlPassword: your-password-here
+service:
+  type: LoadBalancer  # Set the service type to LoadBalancer

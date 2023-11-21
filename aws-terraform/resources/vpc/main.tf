@@ -24,7 +24,8 @@ terraform {
 locals {
   region       = "us-east-1"
   cluster_name = "2560-dev-del"
-  cidr_block   = "10.0.0.0/16"
+  # cidr_block   = "10.0.0.0/16"
+  cidr_block = "10.10.0.0/16"
   availability_zones = [
     "us-east-1a",
     "us-east-1b",

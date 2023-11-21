@@ -70,7 +70,8 @@ resource "aws_iam_policy" "aws-load-balancer-controller-polcy" {
             "elasticloadbalancing:DescribeTargetGroups",
             "elasticloadbalancing:DescribeTargetGroupAttributes",
             "elasticloadbalancing:DescribeTargetHealth",
-            "elasticloadbalancing:DescribeTags"
+            "elasticloadbalancing:DescribeTags",
+            "elasticloadbalancing:CreateLoadBalancer"
           ],
           "Resource" : "*"
         },
