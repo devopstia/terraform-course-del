@@ -55,7 +55,7 @@ resource "random_string" "bucket_suffix" {
   length  = 8
   special = false
   upper   = false
-  number  = false
+  numeric = false
 }
 
 resource "aws_s3_bucket" "example_bucket" {

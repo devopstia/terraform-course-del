@@ -53,10 +53,10 @@ variable "instance_configs" {
   }
 }
 
+
 # Create the AWS instances using the map of objects
 resource "aws_instance" "example" {
   for_each = var.instance_configs
-
   ami                    = var.instance_configs[each.key].ami
   instance_type          = var.instance_configs[each.key].instance_type
   key_name               = var.instance_configs[each.key].key_name
@@ -66,6 +66,6 @@ resource "aws_instance" "example" {
   root_block_device {
     volume_size = var.instance_configs[each.key].volume_size
   }
-
   tags = var.instance_configs[each.key].tags
 }
+

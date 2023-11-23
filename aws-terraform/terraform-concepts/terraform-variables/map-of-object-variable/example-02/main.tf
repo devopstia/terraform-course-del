@@ -65,15 +65,4 @@ resource "aws_instance" "example" {
   root_block_device {
     volume_size = var.instance_configs[each.key].volume_size
   }
-
-  tags = var.instance_configs[each.key].tags
-}
-terraform {
-  required_version = ">= 1.0.0"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
 }

@@ -43,16 +43,13 @@ variable "instance_configs" {
 # Create the AWS instance using the map of objects
 resource "aws_instance" "example" {
   for_each = var.instance_configs
-
   ami                    = var.instance_configs[each.key].ami
   instance_type          = var.instance_configs[each.key].instance_type
   key_name               = var.instance_configs[each.key].key_name
   vpc_security_group_ids = var.instance_configs[each.key].vpc_security_group_ids
   subnet_id              = var.instance_configs[each.key].subnet_id
-
   root_block_device {
     volume_size = var.instance_configs[each.key].volume_size
   }
-
   tags = var.instance_configs[each.key].tags
 }

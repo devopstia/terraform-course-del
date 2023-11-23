@@ -42,10 +42,9 @@ resource "aws_instance" "example" {
   key_name               = var.instance_config["key_name"]
   vpc_security_group_ids = [var.instance_config["vpc_security_group_ids"]]
   subnet_id              = var.instance_config["subnet_id"]
-
   root_block_device {
     volume_size = var.instance_config["volume_size"]
   }
-
   tags = var.tags
 }
+
