@@ -18,23 +18,28 @@ variable "tags" {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
     "teams"          = "DEL"
-    "environment"    = "dev"
-    "project"        = "development"
+    "environment"    = "development"
+    "project"        = "del"
     "create_by"      = "Terraform"
     "cloud_provider" = "aws"
   }
 }
 
+variable "bucket_name" {
+  type    = string
+  default = "s3-bucket-tester"
+}
+
 data "aws_caller_identity" "current" {}
-data "aws_regions" "available" {}
+data "aws_region" "current" {}
 
 resource "aws_s3_bucket" "example_bucket1" {
-  bucket = format("%s-%s-%s-%s-s3-bucket-tester", var.tags["id"], var.tags["environment"], data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+  bucket = "${var.tags["environment"]}-${var.bucket_name}-${data.aws_region.current.name}-${data.aws_caller_identity.current.account_id}"
   tags   = var.tags
 }
 
 resource "aws_s3_bucket" "example_bucket2" {
-  bucket = format("%s-%s-s3-bucket-tester-%s-%s-s3", var.tags["id"], data.aws_caller_identity.current.account_id, var.tags["environment"], data.aws_region.current.name)
+  bucket = "${var.tags["environment"]}-${data.aws_region.current.name}-${data.aws_caller_identity.current.account_id}-${var.bucket_name}"
   tags   = var.tags
 }
 
