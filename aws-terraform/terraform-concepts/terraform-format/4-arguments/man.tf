@@ -18,15 +18,15 @@ variable "tags" {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"
     "teams"          = "DEL"
-    "environment"    = "dev"
-    "project"        = "development"
+    "environment"    = "development"
+    "project"        = "del"
     "create_by"      = "Terraform"
     "cloud_provider" = "aws"
   }
 }
 
 data "aws_caller_identity" "current" {}
-data "aws_regions" "available" {}
+data "aws_region" "current" {}
 
 resource "aws_s3_bucket" "example_bucket1" {
   bucket = format("%s-%s-%s-%s-s3-bucket-tester", var.tags["id"], var.tags["environment"], data.aws_region.current.name, data.aws_caller_identity.current.account_id)
@@ -34,9 +34,11 @@ resource "aws_s3_bucket" "example_bucket1" {
 }
 
 resource "aws_s3_bucket" "example_bucket2" {
-  bucket = format("%s-%s-s3-bucket-tester-%s-%s-s3", var.tags["id"], data.aws_caller_identity.current.account_id, var.tags["environment"], data.aws_region.current.name)
+  bucket = format("%s-%s-s3-bucket-tester-%s-%s", var.tags["id"], data.aws_caller_identity.current.account_id, var.tags["environment"], data.aws_region.current.name)
   tags   = var.tags
 }
+
+
 
 
 

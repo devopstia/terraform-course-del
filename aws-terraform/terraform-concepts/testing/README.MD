@@ -1,5 +1,3 @@
-## Terraform Interpelation
-
 ```s
 variable "tags" {
   type = map(any)
@@ -27,7 +25,7 @@ bucket = "${var.tags["environment"]}-s3-bucket-tester"
 bucket name = development-s3-bucket-tester
 
 bucket = format("tester-%s-s3-bucket", var.tags["environment"])
-bucket name = "tester-${var.tags["environment"]}-s3-bucket"
+bucket name = tester-s3-bucket-tester-development
 
 ## Example 02
 bucket = "tester-${var.tags["environment"]}-s3-bucket-${data.aws_region.current.name}"
@@ -53,3 +51,4 @@ bucket name = 2560-development-us-east-1-788210522308-s3-bucket-tester
 bucket = "${var.tags["id"]}-${data.aws_caller_identity.current.account_id}-${var.bucket_name}-${var.tags["environment"]}-${data.aws_region.current.name}"
 bucket name = 2560-788210522308-s3-bucket-tester-development-us-east-1
 ```
+
