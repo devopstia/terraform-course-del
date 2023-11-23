@@ -1,3 +1,5 @@
+## Providers
+```s
 terraform {
   required_version = ">= 1.0.0"
   required_providers {
@@ -29,5 +31,22 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = "~> 2.0"
     }
+    datadog = {
+      source  = "datadog/datadog"
+      version = "3.0.0"
+    }
+    openstack = {
+      source  = "terraform-provider-openstack/openstack"
+      version = "~> 1.0"
+    }
+    vsphere = {
+      source  = "hashicorp/vsphere"
+      version = "~> 1.0"
+    }
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~> 1.0"
+    }
   }
 }
+```
