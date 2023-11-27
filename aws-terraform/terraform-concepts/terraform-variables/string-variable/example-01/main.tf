@@ -19,7 +19,7 @@ resource "random_string" "bucket_suffix" {
   length  = var.bucket_suffix_length
   special = var.bucket_suffix_special
   upper   = var.bucket_suffix_upper
-  number  = var.bucket_suffix_number
+  numeric = var.bucket_suffix_number
 }
 
 resource "aws_s3_bucket" "example_bucket" {
@@ -30,3 +30,7 @@ resource "aws_s3_bucket" "example_bucket" {
     Create_By = "Terraform"
   }
 }
+
+
+
+
