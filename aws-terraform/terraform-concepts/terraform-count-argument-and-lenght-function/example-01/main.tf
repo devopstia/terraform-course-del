@@ -12,7 +12,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Define a list of instance types and key names for each instance
 variable "instance_types" {
   type    = list(string)
   default = ["t2.micro", "t2.micro", "t2.micro"]
@@ -41,3 +40,5 @@ resource "aws_instance" "example" {
     Create_By = "Terraform"
   }
 }
+
+

@@ -69,3 +69,4 @@ resource "aws_instance" "example" {
 
   tags = var.instance_configurations[count.index].tags
 }
+

@@ -49,3 +49,5 @@ resource "aws_instance" "vm" {
     Create_By = "Terraform"
   })
 }
+
+
