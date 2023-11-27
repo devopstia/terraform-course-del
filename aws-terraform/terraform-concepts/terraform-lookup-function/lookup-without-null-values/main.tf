@@ -39,9 +39,11 @@ resource "aws_instance" "example" {
   root_block_device {
     volume_size = lookup(var.vm, "volume_size", null)
   }
-
   tags = {
     Name      = "vm"
     Create_By = "Terraform"
   }
 }
+
+
+

@@ -88,6 +88,7 @@ variable "instance_configurations" {
   ]
 }
 
+
 resource "aws_instance" "example" {
   count = length(var.instance_configurations)
 
@@ -106,3 +107,5 @@ resource "aws_instance" "example" {
 
   tags = var.instance_configurations[count.index].tags
 }
+
+

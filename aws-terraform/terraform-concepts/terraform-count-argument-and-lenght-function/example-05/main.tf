@@ -9,10 +9,9 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1" # Specify the common region for all instances
+  region = "us-east-1"
 }
 
-# Define a list variable to store instance configurations
 variable "instance_configs" {
   type = list(object({
     ami                    = string
@@ -41,18 +40,17 @@ variable "instance_configs" {
       instance_type          = "t2.small"
       key_name               = "my-key"
       vpc_security_group_ids = ["sg-0123456789abcdef0"]
-      subnet_id              = "subnet-096d45c28d9fb4c14" # Same subnet for all instances
+      subnet_id              = "subnet-096d45c28d9fb4c14"
       volume_size            = "20"
       tags = {
         Name      = "vm-2"
         Create_By = "Terraform"
       }
     }
-    # Add more instance configurations here if needed
   ]
 }
 
-# Create AWS instances using the list variable
+
 resource "aws_instance" "example" {
   count = length(var.instance_configs)
 
@@ -68,3 +66,5 @@ resource "aws_instance" "example" {
 
   tags = var.instance_configs[count.index].tags
 }
+
+
