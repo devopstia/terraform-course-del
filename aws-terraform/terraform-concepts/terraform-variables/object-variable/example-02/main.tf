@@ -36,6 +36,7 @@ variable "instance_configs" {
   }
 }
 
+
 # Create the AWS instances using the map of objects
 resource "aws_instance" "example" {
   ami                    = try(var.instance_configs.ami, "ami-0fc5d935ebf8bc3bc")
@@ -51,5 +52,7 @@ resource "aws_instance" "example" {
     Create_By = "Terraform"
   })
 }
+
+
 
 

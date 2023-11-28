@@ -1,7 +1,5 @@
 ## Example
 
-
-
 ```s
 lookup(var.context, "eks_cluster_id", "Not set")
 lookup(var.context, "cluster_version", "Not set")
