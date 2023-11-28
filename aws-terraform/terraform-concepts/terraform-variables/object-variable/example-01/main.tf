@@ -50,3 +50,4 @@ resource "aws_instance" "example" {
   }
   tags = var.instance_configs.tags
 }
+

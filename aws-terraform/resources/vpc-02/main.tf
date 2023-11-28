@@ -14,14 +14,14 @@ provider "aws" {
   region = local.aws_region
 }
 
-# terraform {
-#   backend "s3" {
-#     bucket         = ""
-#     key            = ""
-#     region         = ""
-#     dynamodb_table = ""
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket         = ""
+    key            = ""
+    region         = ""
+    dynamodb_table = ""
+  }
+}
 
 locals {
   private-subnets-cdir = [

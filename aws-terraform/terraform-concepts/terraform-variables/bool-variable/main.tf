@@ -82,7 +82,7 @@ resource "random_string" "bucket_suffix" {
   length  = var.bucket_suffix_length
   special = var.bucket_suffix_special
   upper   = var.bucket_suffix_upper
-  number  = var.bucket_suffix_number
+  numeric = var.bucket_suffix_number
 }
 
 # S3 bucket resource
