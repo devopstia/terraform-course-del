@@ -1,77 +1,35 @@
 
-# Refer module from AWS VPC module
-module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
-}
 
-# Refer module from VPC module from local
-module "vpc" {
-  source = "../../modules/vpc/"
-}
-
-# Refer module from github using ssh connection and reference the branch main
-module "vpc" {
-  source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
-
-}
-
-# Refer module from github using ssh connection and reference the branch develop
-module "vpc" {
-  source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=develop"
-}
-
-# Refer module from github using https connection and reference the branch main
-module "vpc" {
-  source = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
-}
-
-# Refer module from github using https connection and reference the branch develop
-module "vpc" {
-  source = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
+terraform {
+  required_version = ">= 1.0.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.1.0"
+    }
+  }
 }
 
 
-# Refer module from github using ssh connection and reference the tag name v1.1.0
-module "vpc" {
-  source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=v1.1.0"
+resource "aws_instance" "example" {
+  count = 3
 
+  ami                    = "ami-0fc5d935ebf8bc3bc"
+  instance_type          = "t2.micro"
+  key_name               = "terraform-aws"
+  vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
+  subnet_id              = "subnet-096d45c28d9fb4c14"
+
+  root_block_device {
+    volume_size = "10"
+  }
+
+  tags = {
+    Name      = "vm-${count.index + 1}"
+    Create_By = "Terraform"
+  }
 }
-
-# Refer module from github using ssh connection and reference the tag name v1.1.0
-module "vpc" {
-  source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=v1.1.0"
-}
-
-# Refer module from github using https connection and reference the tag name v1.1.0
-module "vpc" {
-  source = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=v1.1.0"
-}
-
-# Refer module from github using https connection and reference the tag name v1.1.0
-module "vpc" {
-  source = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=v1.1.0"
-}
-
-
-# Refer module from github using ssh connection and reference the tag name 4a56c34
-module "vpc" {
-  source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=4a56c34"
-
-}
-
-# Refer module from github using ssh connection and reference the tag name 4a56c34
-module "vpc" {
-  source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=4a56c34"
-}
-
-# Refer module from github using https connection and reference the tag name 4a56c34
-module "vpc" {
-  source = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=4a56c34"
-}
-
-# Refer module from github using https connection and reference the tag name 4a56c34
-module "vpc" {
-  source = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=4a56c34"
-}
-
-

@@ -14,14 +14,14 @@ provider "aws" {
   region = local.aws_region
 }
 
-terraform {
-  backend "s3" {
-    bucket         = ""
-    key            = ""
-    region         = ""
-    dynamodb_table = ""
-  }
-}
+# terraform {
+#   backend "s3" {
+#     bucket         = ""
+#     key            = ""
+#     region         = ""
+#     dynamodb_table = ""
+#   }
+# }
 
 locals {
   private-subnets-cdir = [
@@ -49,7 +49,8 @@ locals {
 }
 
 module "vpc-02" {
-  source                           = "../../modules/vpc-02/"
+  source = "../../modules/vpc-02/"
+  # source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc-02?ref=main"
   aws_region                       = local.aws_region
   cidr_block                       = local.cidr_block
   public-subnet-cidr               = local.public-subnet-cidr

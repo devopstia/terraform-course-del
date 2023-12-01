@@ -32,15 +32,15 @@ locals {
   # }
 
   private_subnets = {
-    us-east-1a = "subnet-0346f91f492ccfaa8"
-    us-east-1b = "subnet-0d4e63819baf2844c"
-    us-east-1c = "subnet-02622d73204514286"
+    us-east-1a = "subnet-01192d5e2ca3bcc4b"
+    us-east-1b = "subnet-07e654dd8a4351aa5"
+    us-east-1c = "subnet-0cac1247c39bd6da2"
   }
 
   eks_version  = "1.24"
   node_min     = "1"
   desired_node = "1"
-  node_max     = "6"
+  node_max     = "2"
 
   blue_node_color  = "blue"
   green_node_color = "green"

@@ -12,7 +12,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Define a list variable to store instance configurations
 variable "instance_configs" {
   type = list(object({
     ami                    = string
@@ -36,11 +35,9 @@ variable "instance_configs" {
         Create_By = "Terraform"
       }
     }
-    # Add more instance configurations here if needed
   ]
 }
 
-# Create AWS instances using the list variable
 resource "aws_instance" "example" {
   count = length(var.instance_configs)
 

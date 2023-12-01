@@ -12,7 +12,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Define a map variable for the instance configuration
 variable "instance_config" {
   description = "Instance configuration"
   type        = map(string)
@@ -34,8 +33,6 @@ variable "tags" {
   }
 }
 
-
-# Create the AWS instance using the map variable
 resource "aws_instance" "example" {
   ami                    = var.instance_config["ami"]
   instance_type          = var.instance_config["instance_type"]

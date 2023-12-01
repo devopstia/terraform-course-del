@@ -1,29 +1,21 @@
 ## Variable definiation
 ```s
 variable "context" {
-  description = "Input configuration for the Node groups"
+  description = ""
   type = object({
-    # EKS Cluster Config
     eks_cluster_id    = string
     cluster_ca_base64 = string
     cluster_endpoint  = string
     cluster_version   = string
-    # VPC Config
     vpc_id             = string
     private_subnet_ids = list(string)
     public_subnet_ids  = list(string)
-    # Security Groups
     worker_security_group_ids = list(string)
-
-    # Data sources
     aws_partition_dns_suffix = string
     aws_partition_id         = string
-    #IAM
     iam_role_path                 = string
     iam_role_permissions_boundary = string
-    # Tags
     tags = map(string)
-    # Service IPV4/IPV6 CIDR
     service_ipv6_cidr = string
     service_ipv4_cidr = string
   })
@@ -33,7 +25,7 @@ variable "context" {
 ## Object with default values
 ```s
 variable "context" {
-  description = "Input configuration for the Node groups"
+  description = ""
   type = object({
     eks_cluster_id    = string
     cluster_ca_base64 = string
@@ -79,9 +71,18 @@ context = {
   cluster_endpoint  = "your-cluster-endpoint"
   cluster_version   = "your-cluster-version"
   vpc_id             = "your-vpc-id"
-  private_subnet_ids = ["private-subnet-id-1", "private-subnet-id-2"]
-  public_subnet_ids  = ["public-subnet-id-1", "public-subnet-id-2"]
-  worker_security_group_ids = ["security-group-id-1", "security-group-id-2"]
+  private_subnet_ids = [
+    "private-subnet-id-1", 
+    "private-subnet-id-2"
+    ]
+  public_subnet_ids  = [
+    "public-subnet-id-1", 
+    "public-subnet-id-2"
+    ]
+  worker_security_group_ids = [
+    "security-group-id-1", 
+    "security-group-id-2"
+    ]
   aws_partition_dns_suffix = "your-dns-suffix"
   aws_partition_id         = "your-partition-id"
   iam_role_path                 = "your-iam-role-path"

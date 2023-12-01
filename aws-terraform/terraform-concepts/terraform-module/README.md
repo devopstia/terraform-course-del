@@ -13,7 +13,6 @@ module "vpc" {
 # Refer module from github using ssh connection and reference the branch main
 module "vpc" {
   source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
-
 }
 
 # Refer module from github using ssh connection and reference the branch develop

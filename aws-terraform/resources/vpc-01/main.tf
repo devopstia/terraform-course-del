@@ -44,7 +44,8 @@ locals {
 }
 
 module "vpc-01" {
-  source             = "../../modules/vpc-01"
+  source = "../../modules/vpc-01"
+  # source = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc-01?ref=main"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones

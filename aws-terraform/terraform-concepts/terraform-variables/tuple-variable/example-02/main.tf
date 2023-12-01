@@ -49,7 +49,7 @@ resource "aws_instance" "example" {
   ami                    = var.ec2_instance_config[1]
   instance_type          = var.ec2_instance_config[0]
   key_name               = "terraform-aws"
-  vpc_security_group_ids = [var.ec2_instance_config[0], var.ec2_instance_config[1]]
+  vpc_security_group_ids = var.ec2_instance_config[5]
   subnet_id              = "subnet-096d45c28d9fb4c14"
   root_block_device {
     volume_size = var.ec2_instance_config[3]
