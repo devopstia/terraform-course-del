@@ -43,3 +43,5 @@ resource "aws_instance" "vm" {
 
   tags = var.instance_params["tags"]
 }
+
+

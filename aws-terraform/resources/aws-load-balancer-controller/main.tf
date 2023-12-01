@@ -26,7 +26,7 @@ locals {
   aws-load-balancer-controller-sa = "aws-load-balancer-controller-sa"
   aws-load-balancer-controller-ns = "kube-system"
   eks-controle-plane-name         = "2560-dev-del"
-  vpc_id                          = "vpc-0316c5e1432589c37"
+  vpc_id                          = "vpc-06beafd45ef219a5a"
   tags = {
     "id"             = "2560"
     "owner"          = "DevOps Easy Learning"

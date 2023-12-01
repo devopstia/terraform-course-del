@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1" # Change to your desired AWS region
+  region = "us-east-1"
 }
 
 resource "aws_db_instance" "default" {
@@ -23,3 +23,5 @@ resource "aws_db_instance" "default" {
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
 }
+
+

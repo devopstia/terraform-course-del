@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete #Retain
-  storageClassName: 2560-dev-del  # Ensure this matches your storage class
+  storageClassName: gp2  # Ensure this matches your storage class
   hostPath:
     path: /mysql_data  # Replace with your actual host path or storage location
 
@@ -64,7 +64,7 @@ spec:
     - metadata:
         name: mysql-data
       spec:
-        storageClassName: 2560-dev-del
+        storageClassName: gp2
         accessModes:
           - ReadWriteOnce
         resources:
