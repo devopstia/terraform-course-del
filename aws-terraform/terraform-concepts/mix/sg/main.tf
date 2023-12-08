@@ -1,7 +1,7 @@
 resource "aws_security_group" "ssh_http_sg" {
   name_prefix = "ssh-http-sg"
   description = "Allow all inbound traffic from port 22 and 80"
-  vpc_id      = data.aws_vpc.adl_eks_vpc.id
+  vpc_id      = ""
 
   tags = {
     Name = "SSH and HTTP SG"
