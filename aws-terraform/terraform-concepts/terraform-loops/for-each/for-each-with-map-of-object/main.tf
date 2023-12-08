@@ -48,6 +48,18 @@ variable "instance_configs" {
         Create_By = "Terraform"
       }
     }
+    instance3 = {
+      ami                    = "ami-0fc5d935ebf8bc3bc"
+      instance_type          = "t2.micro"
+      key_name               = "terraform-aws"
+      vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
+      subnet_id              = "subnet-05f285a35173783b0"
+      volume_size            = "20"
+      tags = {
+        Name      = "vm-3"
+        Create_By = "Terraform"
+      }
+    }
   }
 }
 
