@@ -1,0 +1,202 @@
+pipeline {
+    agent {
+       label 'master'
+    }
+    triggers {
+        githubPush()
+    }
+    environment {
+        DOCKER_HUB_REGISTRY = "leonardtia/${params.APPLICATION_NAME}"
+        ECR_REPOSITORY_URI = "${params.AWS_ACCOUNT_NUMBER}.dkr.ecr.${params.AWS_REGION}.amazonaws.com"
+        ECR_REPOSITORY_NAME = "development"
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+        skipDefaultCheckout(true)
+        disableConcurrentBuilds()
+        timeout (time: 10, unit: 'MINUTES')
+        timestamps()
+    }
+    parameters {
+        string (name: 'BRANCH_NAME', defaultValue: 'dev', description: '')
+        string(name: 'AWS_ACCOUNT_NUMBER', defaultValue: '064137398917', description: '')
+        string(name: 'AWS_REGION', defaultValue: 'us-east-1', description: '')
+        
+        choice(name: 'AWS', choices: [
+            '',
+            'del-dev-vpc',
+            'del-prod-vpc',
+        ], description: 'Select AWS resource')
+        
+        choice(name: 'AZURE', choices: [
+            '',
+            'del-dev-vpc',
+            'del-prod-vpc',
+        ], description: 'Select Azure resource')
+
+        choice(name: 'ClOUD_PROVIDER', choices: [
+            '',
+            'AWS',
+            'AZURE',
+            'GOOGLE',
+        ], description: 'Select the Cloud Where you want to deploy the resource')
+
+        booleanParam (name: 'PLAN', defaultValue: false, description: '')
+        booleanParam (name: 'APPLY', defaultValue: false, description: '')
+        booleanParam (name: 'DESTROY', defaultValue: false, description: '')
+    }
+    stages {
+        stage ('Checkout') {
+            steps {
+                dir("${WORKSPACE}/code") {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: "*/${env.BRANCH_NAME}"]],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'LocalBranch']],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[
+                        url: 'https://github.com/devopstia/pipelines.git',
+                        credentialsId: 'github-credentials'
+                        ]]
+                    ])
+                }
+            }
+        }
+        stage ('Sanity Check') {
+            steps {
+                script {
+                   sh """
+                   ls -l /home
+                   """
+                }
+            }
+        }
+        stage('Getting AWS Credentials') {
+            steps {
+                script {
+                   def awsCredentialsId = 'aws-access-dev-cred'
+                   withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        credentialsId: awsCredentialsId,
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                        aws_credentials()
+                   } 
+                }
+            }
+        }
+        stage('Deploying AWS Cloud') {
+            when {
+                expression { params.ClOUD_PROVIDER == 'AWS' }
+            }
+            steps {
+                script {
+                   println('::==================================Deploying AWS Cloud============================================::') 
+                }
+            }
+        }
+        stage('Deploying Azure Cloud') {
+            when {
+                expression { params.ClOUD_PROVIDER == 'AZURE' }
+            }
+            steps {
+                script {
+                   println('::==================================Deploying Azure Cloud============================================::') 
+                }
+            }
+        }
+        stage('Deploying GOOGLE Cloud') {
+            when {
+                expression { params.ClOUD_PROVIDER == 'GOOGLE' }
+            }
+            steps {
+                script {
+                   println('::==================================Deploying GOOGLE Cloud============================================::') 
+                }
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                script {
+                    sh """
+                    ls
+                    """
+                }
+            }
+        }
+        stage('Terraform Plan') {
+            when {
+                expression { params.PLAN == true }
+            }
+            steps {
+                script {
+                    sh """
+                    ls
+                    """
+                }
+            }
+        }
+        stage('Terraform Apply') {
+            when {
+                expression { params.APPLY == true }
+            }
+            steps {
+                script {
+                    sh """
+                    ls
+                    """
+                }
+            }
+        }
+        stage('Terraform Destroy') {
+            when {
+                expression { params.DESTROY == true }
+            }
+            steps {
+                script {
+                    sh """
+                    ls
+                    """
+                }
+            }
+        }
+        stage('Clean Up AWS Credentials') {
+            steps {
+                script {
+                    sh """
+                    cd ~/
+                    rm -rf .aws  true
+                    """
+                }
+            }
+        }
+    }
+}
+
+
+def aws_credentials() {
+sh """    
+mkdir -p ~/.aws || true
+
+cat <<EOF > ~/.aws/credentials
+[default]
+aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+EOF
+
+cat <<EOF > ~/.aws/config
+[default]
+region = ${params.AWS_REGION}
+output = json
+EOF
+
+cat ~/.aws/credentials
+aws s3 ls
+terraform --version
+"""
+}
+
+
+
