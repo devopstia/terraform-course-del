@@ -1,30 +1,27 @@
 # Use Alpine Linux as the base image
 FROM alpine:latest
 
-# Update the package index and install necessary packages
-RUN apk --update add \
-    wget \
-    curl \
-    vim \
-    unzip \
+# Install necessary packages
+RUN apk update && \
+    apk add --no-cache \
+    aws-cli \
     git \
-    python3 \
-    py3-pip \
+    wget \
+    vim \
     && rm -rf /var/cache/apk/*
 
-# Install AWS CLI using pip
-RUN pip3 install awscli
-
 # Install Terraform
-ENV TERRAFORM_VERSION 1.0.0
-WORKDIR /tmp
-RUN wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-    && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-    && mv terraform /usr/local/bin \
-    && rm -f terraform terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+RUN wget https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip && \
+    unzip terraform_1.0.0_linux_amd64.zip && \
+    mv terraform /usr/local/bin/ && \
+    rm terraform_1.0.0_linux_amd64.zip
 
 # Install Terragrunt
-ENV TERRAGRUNT_VERSION v0.31.0
-RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 \
-    && mv terragrunt_linux_amd64 /usr/local/bin/terragrunt \
-    && chmod +x /usr/local/bin/terragrunt
+RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.0/terragrunt_linux_amd64 -O /usr/local/bin/terragrunt && \
+    chmod +x /usr/local/bin/terragrunt
+
+# Set the working directory to /terraform (you can change this as needed)
+WORKDIR /terraform
+
+# Entry point (you can customize this as needed)
+CMD ["/bin/sh"]
