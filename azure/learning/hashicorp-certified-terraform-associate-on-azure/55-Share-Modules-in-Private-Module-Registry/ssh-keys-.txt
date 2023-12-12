@@ -1,1 +1,0 @@
-ssh-keygen -t rsa -m PEM -f "$HOME/.ssh/service_terraform" -C "service_terraform_enterprise"
