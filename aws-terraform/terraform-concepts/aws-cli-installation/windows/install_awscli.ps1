@@ -18,3 +18,5 @@ if ($LASTEXITCODE -eq 0) {
 } else {
     Write-Host "Failed to install AWS CLI."
 }
+
+

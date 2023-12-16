@@ -39,3 +39,16 @@ terraform1 --version
 ```
 tf1 state pull |grep terraform_version
 ```
+
+## Download Links
+```
+https://releases.hashicorp.com/terraform/0.12.30/terraform_0.12.30_darwin_amd64.zip
+
+https://releases.hashicorp.com/terraform/0.13.0/terraform_0.13.0_darwin_amd64.zip
+
+https://releases.hashicorp.com/terraform/0.14.0/terraform_0.14.0_darwin_amd64.zip
+
+https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_darwin_amd64.zip
+
+https://releases.hashicorp.com/terraform/1.2.6/terraform_1.2.6_darwin_amd64.zip
+```

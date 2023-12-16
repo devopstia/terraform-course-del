@@ -11,3 +11,10 @@ az login
 az login --tenant <TenantID>
 az login --tenant a5e4db0a-c014-45e6-a834-327edf475b29
 ```
+
+## Login when having multiple subscription
+```
+az account list
+az account list -o table
+az account set --subscription="SUBSCRIPTION_ID"
+```

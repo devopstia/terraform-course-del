@@ -3,7 +3,7 @@ $terraformVersions = @("0.12.30", "0.13.0", "0.14.0", "1.0.0", "1.2.6", "1.0.0")
 $terraformBinNames = @("tf12", "tf13", "tf14", "tf1", "tf126", "terraform")
 
 # Create a directory to store the Terraform binaries
-$installDir = "C:\Terraform"
+$installDir = "C:\Terraform" # make sure you add this to path
 New-Item -ItemType Directory -Path $installDir -Force | Out-Null
 
 # Loop through the versions and install each one with the corresponding binary name
