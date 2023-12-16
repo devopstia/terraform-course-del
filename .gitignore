@@ -24,3 +24,5 @@ backend/.idea/*
 *.tfstate
 *.tfstate.*
 
+*.terragrunt.*
+.terragrunt-cache

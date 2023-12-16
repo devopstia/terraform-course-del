@@ -15,10 +15,10 @@ provider "aws" {
 variable "aws_region" {
   description = "Region"
   type        = string
-  default     = "us-west-1"
+  default     = "us-east-2"
   validation {
-    condition     = var.aws_region == "us-east-1" || var.aws_region == "us-east-2"
-    error_message = "We only allow Resources to be created in us-east-1 or us-east-2 regions."
+    condition     = contains(["us-east-1"], lower(var.aws_region))
+    error_message = "We only allow Resources to be created in us-east-1 region."
   }
 }
 
@@ -36,3 +36,4 @@ resource "aws_instance" "example" {
     Create_By = "Terraform"
   }
 }
+
