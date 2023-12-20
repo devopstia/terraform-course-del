@@ -15,6 +15,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "myrg" {
-  name     = "myrg-1"
+  name     = format("%s-%s-%s", var.tags["id"], var.tags["environment"], var.tags["project"])
   location = "East US"
+  tags     = var.tags
 }

@@ -24,3 +24,5 @@ locals {
 output "names_list" {
   value = local.names
 }
+
+
