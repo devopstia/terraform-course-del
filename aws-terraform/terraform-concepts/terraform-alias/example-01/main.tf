@@ -36,4 +36,3 @@ resource "aws_s3_bucket" "default_bucket" {
   bucket = "tia125458710"
 }
 
-

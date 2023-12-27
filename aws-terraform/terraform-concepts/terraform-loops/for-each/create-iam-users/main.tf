@@ -5,13 +5,36 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.0"
     }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.1.0"
-    }
   }
 }
 
 provider "aws" {
   region = "us-east-1"
+}
+
+variable "user_names" {
+  description = "IAM usernames"
+  type        = list(string)
+  default     = ["annie", "amy", "alain", "viviane"]
+}
+
+resource "aws_iam_user" "iam_users" {
+  for_each = { for idx, users in var.user_names : idx => users }
+
+  name = each.value
+
+  tags = {
+    "Environment" = "Production"
+    "Owner"       = "Terraform"
+  }
+}
+
+# Additional attributes for each IAM user
+output "iam_user_arns1" {
+  value = { for user_name, user in aws_iam_user.iam_users : user_name => user.arn }
+}
+
+# Additional attributes for each IAM user
+output "iam_user_arns2" {
+  value = [for user in aws_iam_user.iam_users : user.arn]
 }

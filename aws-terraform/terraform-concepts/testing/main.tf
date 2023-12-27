@@ -1,38 +1,36 @@
-terraform {
-  required_version = ">= 1.0.0"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-}
+# terraform {
+#   required_version = ">= 1.0.0"
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "~> 4.0"
+#     }
+#   }
+# }
 
-provider "aws" {
-  region = var.aws_region
-}
+# provider "aws" {
+#   region = "us-east-1"
+# }
 
-variable "aws_region" {
-  description = "Region"
-  type        = string
-  default     = "us-west-1"
-  validation {
-    condition     = var.aws_region == "us-east-1" || var.aws_region == "us-east-2"
-    error_message = "We only allow Resources to be created in us-east-1 or us-east-2 regions."
-  }
-}
+# variable "instance_types" {
+#   type    = list(any)
+#   default = [("t2.micro", 2), ("t3.micro", 1)]
+# }
 
-resource "aws_instance" "example" {
-  ami                    = "ami-0fc5d935ebf8bc3bc"
-  instance_type          = "t2.micro"
-  key_name               = "terraform-aws"
-  vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
-  subnet_id              = "subnet-096d45c28d9fb4c14"
-  root_block_device {
-    volume_size = "10"
-  }
-  tags = {
-    Name      = "vm"
-    Create_By = "Terraform"
-  }
-}
+# resource "aws_instance" "example" {
+#   for_each               = tomap(var.instance_types)
+#   ami                    = "ami-0fc5d935ebf8bc3bc"
+#   instance_type          = each.key
+#   key_name               = "terraform-aws"
+#   vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
+#   subnet_id              = "subnet-096d45c28d9fb4c14"
+#   root_block_device {
+#     volume_size = "10"
+#   }
+#   count = each.value
+
+#   tags = {
+#     Name      = "vm-${each.key}"
+#     Create_By = "Terraform"
+#   }
+# }

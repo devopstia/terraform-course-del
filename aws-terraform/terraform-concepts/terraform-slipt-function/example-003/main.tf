@@ -24,3 +24,4 @@ output "split" {
 output "record_split" {
   value = (split(":", var.record)[0])
 }
+
