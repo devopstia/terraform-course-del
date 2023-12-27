@@ -22,12 +22,6 @@ variable "user_names_1" {
   default     = ["annie", "amy", "alain", "viviane"]
 }
 
-variable "user_names_2" {
-  description = "IAM usernames"
-  type        = list(string)
-  default     = ["paul", "peter", "tom", "smith"]
-}
-
 resource "aws_iam_user" "user1" {
   name = var.user_names_1[0]
 }
@@ -42,11 +36,6 @@ resource "aws_iam_user" "user3" {
 
 resource "aws_iam_user" "user4" {
   name = var.user_names_1[3]
-}
-
-resource "aws_iam_user" "example" {
-  count = length(var.user_names_2)
-  name  = var.user_names_2[count.index]
 }
 
 

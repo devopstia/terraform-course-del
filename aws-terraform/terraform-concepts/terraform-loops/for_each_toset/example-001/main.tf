@@ -14,14 +14,14 @@ provider "aws" {
 
 variable "user_names" {
   description = "IAM usernames"
-  type        = list(string)
+  type        = list(any)
   default     = ["annie", "amy", "alain", "viviane"]
 }
 
 resource "aws_iam_user" "iam_users" {
-  for_each = { for idx, users in var.user_names : idx => users }
+  for_each = toset(var.user_names)
 
-  name = each.value
+  name = each.key
 
   tags = {
     "Environment" = "Production"
