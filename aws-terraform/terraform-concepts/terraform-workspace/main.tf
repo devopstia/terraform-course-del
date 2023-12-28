@@ -1,3 +1,7 @@
+locals {
+  name = "${terraform.workspace}-vm"
+}
+
 resource "aws_instance" "vm" {
   ami                    = var.ec2_instance_ami
   instance_type          = var.ec2_instance_type
@@ -10,14 +14,7 @@ resource "aws_instance" "vm" {
   }
 
   tags = {
-    Name      = "vm"
+    Name      = local.name
     Create_By = "Terraform"
   }
-}
-
-resource "random_string" "bucket_suffix" {
-  length  = var.bucket_suffix_length
-  special = var.bucket_suffix_special
-  upper   = var.bucket_suffix_upper
-  numeric = var.bucket_suffix_number
 }

@@ -42,3 +42,4 @@ output "private_cidrs" {
 output "public_cidrs" {
   value = data.terraform_remote_state.vpc_state.outputs.public_cidrs
 }
+
