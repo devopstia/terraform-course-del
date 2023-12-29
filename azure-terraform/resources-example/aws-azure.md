@@ -12,3 +12,6 @@
 
 ## Resource naming
 - Azure allow on 3 to 24 characters while AWS allow more that 24
+
+## SG
+- A security group can be attach to a subnet or a VM in Azure while we only attach in to a VM in AWS
