@@ -511,3 +511,5 @@ terraform apply -destroy
 rm -rf .terraform* 
 rm -rf terraform.tfstate*
 ```
+
+![Alt text](image.png)
