@@ -1,3 +1,7 @@
+## Terraform Releases
+- https://releases.hashicorp.com/terraform/
+- https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+
 ## Install terraform on Mac
 https://stackoverflow.com/questions/69902998/terraformmacoszsh-exec-format-error-terraform
 

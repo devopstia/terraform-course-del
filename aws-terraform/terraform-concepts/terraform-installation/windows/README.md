@@ -1,3 +1,8 @@
+## Terraform Releases
+- https://releases.hashicorp.com/terraform/
+- https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+
+
 ## Installation cammands
 
 Installaltion command. We must PowerShell -ExecutionPolicy Bypass -File to Bypass and specify the absolue path to the script.
