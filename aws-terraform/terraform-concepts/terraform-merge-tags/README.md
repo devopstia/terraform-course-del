@@ -1,49 +1,121 @@
+## terraform-merge-tags
 ```s
-variable "tags" {
-  type = map(any)
-  default = {
-    "id"             = "2560"
-    "owner"          = "DevOps Easy Learning"
-    "teams"          = "DEL"
-    "environment"    = "development"
-    "project"        = "del"
-    "create_by"      = "Terraform"
-    "cloud_provider" = "aws"
+terraform {
+  required_version = ">= 1.0.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
   }
 }
 
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
+provider "aws" {
+  region = "us-east-1"
+}
 
-## 1 arg
-bucket = format("%s-s3-bucket-tester", var.tags["environment"])
-%s-s3-bucket-tester for 1 arg = development-s3-bucket-tester
+variable "ec2_instance_config" {
+  type        = any
+  description = "Configuration for EC2 instance"
+  default = {
+    ec2_settings = {
+      ami           = "ami-0fc5d935ebf8bc3bc"
+      instance_type = ["t2.micro", "t2.medium"]
+      key_name      = "terraform-aws"
+    }
+    vpc_settings = {
+      vpc_cidr_block       = "10.10.0.0/16"
+      enable_dns_support   = true
+      enable_dns_hostnames = true
+      availability_zones   = ["us-east-1a", "us-east-1b"]
+      subnet_cidr_blocks   = ["10.10.1.0/24", "10.10.2.0/24"]
+    }
+    tags = {
+      "id"             = "2560"
+      "owner"          = "DevOps Easy Learning"
+      "teams"          = "DEL"
+      "environment"    = "development"
+      "project"        = "del"
+      "create_by"      = "Terraform"
+      "cloud_provider" = "aws"
+    }
+  }
+}
 
-bucket = format("tester-%s-s3-bucket", var.tags["environment"])
-tester-%s-s3-bucket for 1 arg = tester-development-s3-bucket
+resource "aws_vpc" "example_vpc" {
+  cidr_block           = var.ec2_instance_config["vpc_settings"]["vpc_cidr_block"]
+  enable_dns_support   = var.ec2_instance_config["vpc_settings"]["enable_dns_support"]
+  enable_dns_hostnames = var.ec2_instance_config["vpc_settings"]["enable_dns_hostnames"]
+  tags = merge(var.ec2_instance_config["tags"], {
+    Name = format("%s-%s-%s-vpc", var.ec2_instance_config["tags"]["id"], var.ec2_instance_config["tags"]["environment"], var.ec2_instance_config["tags"]["project"])
+    },
+  )
+}
 
-## 2 arg
-bucket = format("tester-%s-s3-bucket-%s", var.tags["environment"], data.aws_region.current.name)
-tester-%s-s3-bucket-%s for 2 args = tester-development-s3-bucket-us-east-1
+resource "aws_internet_gateway" "example_igw" {
+  vpc_id = aws_vpc.example_vpc.id
+  tags = merge(var.ec2_instance_config["tags"], {
+    Name = format("%s-%s-%s-internet-gateway", var.ec2_instance_config["tags"]["id"], var.ec2_instance_config["tags"]["environment"], var.ec2_instance_config["tags"]["project"])
+    },
+  )
+}
 
-bucket = format("%s-s3-bucket-tester-%s", var.tags["environment"], data.aws_region.current.name)
-%s-s3-bucket-tester-%s for 2 args = development-s3-bucket-tester-us-east-1
+resource "aws_subnet" "public_subnet" {
+  vpc_id                  = aws_vpc.example_vpc.id
+  cidr_block              = var.ec2_instance_config["vpc_settings"]["subnet_cidr_blocks"][0]
+  availability_zone       = var.ec2_instance_config["vpc_settings"]["availability_zones"][0]
+  map_public_ip_on_launch = true
+  tags = merge(var.ec2_instance_config["tags"], {
+    Name = format("%s-%s-%s-public-subnet", var.ec2_instance_config["tags"]["id"], var.ec2_instance_config["tags"]["environment"], var.ec2_instance_config["tags"]["project"])
+    },
+  )
+}
 
-bucket = format("%s-%s-s3-bucket-tester", var.tags["environment"], data.aws_region.current.name)
-%s-%s-s3-bucket-tester for 2 args = development-us-east-1-s3-bucket-tester
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.example_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.example_igw.id
+  }
+  tags = merge(var.ec2_instance_config["tags"], {
+    Name = format("%s-%s-%s-public-subnet-route-table", var.ec2_instance_config["tags"]["id"], var.ec2_instance_config["tags"]["environment"], var.ec2_instance_config["tags"]["project"])
+    },
+  )
+}
 
-## 3 arg
-bucket = format("%s-s3-bucket-tester-%s-%s", var.tags["environment"], data.aws_region.current.name, data.aws_caller_identity.current.account_id)
-%s-s3-bucket-tester-%s-%s for 3 args = development-s3-bucket-tester-us-east-1-788210522308
+resource "aws_route_table_association" "public_01" {
+  subnet_id      = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.public.id
+}
 
-bucket = format("%s-%s-%s-s3-bucket-tester", var.tags["environment"], data.aws_region.current.name, data.aws_caller_identity.current.account_id)
-%s-%s-%s-s3-bucket-tester for 3 args = development-us-east-1-788210522308-s3-bucket-tester
+resource "aws_security_group" "example_sg" {
+  name        = format("%s-%s-%s-sg", var.ec2_instance_config["tags"]["id"], var.ec2_instance_config["tags"]["environment"], var.ec2_instance_config["tags"]["project"])
+  description = "Example security group for EC2 instance"
+  vpc_id      = aws_vpc.example_vpc.id
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
-## 4 arg
-bucket = format("%s-%s-%s-%s-s3-bucket-tester", var.tags["id"], var.tags["environment"], data.aws_region.current.name, data.aws_caller_identity.current.account_id)
-%s-%s-%s-%s-s3-bucket-tester for 4 args = 2560-development-us-east-1-788210522308-s3-bucket-tester
-
-bucket = format("%s-%s-s3-bucket-tester-%s-%s", var.tags["id"], data.aws_caller_identity.current.account_id, var.tags["environment"], data.aws_region.current.name)
-%s-%s-%s-%s-s3-bucket-tester for 4 args = 2560-788210522308-s3-bucket-tester-development-us-east-1
+resource "aws_instance" "example" {
+  ami                    = var.ec2_instance_config["ec2_settings"]["ami"]
+  instance_type          = var.ec2_instance_config["ec2_settings"]["instance_type"][0]
+  subnet_id              = aws_subnet.public_subnet.id
+  key_name               = var.ec2_instance_config["ec2_settings"]["key_name"]
+  vpc_security_group_ids = [aws_security_group.example_sg.id]
+  tags = merge(var.ec2_instance_config["tags"], {
+    Name = format("%s-%s-%s-vm", var.ec2_instance_config["tags"]["id"], var.ec2_instance_config["tags"]["environment"], var.ec2_instance_config["tags"]["project"])
+    },
+  )
+}
 ```
 
