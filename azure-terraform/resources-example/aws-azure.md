@@ -15,3 +15,6 @@
 
 ## SG
 - A security group can be attach to a subnet or a VM in Azure while we only attach in to a VM in AWS
+
+## NAT
+- We can create a NAT at the loadbalancer level with a specify SSH port to access VM behind the loadbalancer while it is not passible in AWS
