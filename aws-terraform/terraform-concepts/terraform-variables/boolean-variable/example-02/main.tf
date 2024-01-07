@@ -19,7 +19,7 @@ provider "aws" {
 variable "bucket_suffix_length" {
   description = "Length of the random bucket suffix"
   type        = number
-  default     = 8 # Replace with your desired length
+  default     = 10 # Replace with your desired length
 }
 
 variable "bucket_suffix_special" {

@@ -19,7 +19,7 @@ variable "create_instance" {
 
 resource "aws_instance" "example" {
   # Create one instance if create_instance is true, otherwise create none
-  count = var.create_instance ? 1 : 0
+  count = var.create_instance ? 2 : 0
 
   ami                    = "ami-0fc5d935ebf8bc3bc"
   instance_type          = "t2.micro"
@@ -31,9 +31,7 @@ resource "aws_instance" "example" {
   }
 
   tags = {
-    Name      = "vm"
+    Name      = "vm-${count.index + 1}" # Unique instance name based on index
     Create_By = "Terraform"
   }
 }
-
-
