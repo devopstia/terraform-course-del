@@ -62,5 +62,5 @@ variable "bucket_suffix_upper" {
 variable "bucket_suffix_number" {
   type        = bool
   description = "Include numbers in the random string for the S3 bucket name"
-  default     = false
+  default     = true
 }
