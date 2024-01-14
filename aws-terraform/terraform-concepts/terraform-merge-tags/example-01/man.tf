@@ -35,7 +35,8 @@ resource "aws_instance" "example" {
     volume_size = "10"
   }
   tags = merge(var.tags, {
-    Name = format("%s-bastion-host", var.tags["environment"])
+    Name = format("%s-%s-bastion-host", var.tags["id"], var.tags["environment"])
+    Tia  = "Terraform guy"
     },
   )
 }

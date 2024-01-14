@@ -15,7 +15,7 @@ provider "aws" {
 variable "s3_bucket_config" {
   description = "Configuration for an S3 bucket"
   type        = tuple([number, string, bool])
-  default     = [1, "example-bucket-xx1254ded", true]
+  default     = [2, "example-bucket-xx1254ded", false]
 }
 
 resource "aws_s3_bucket" "example" {
@@ -25,9 +25,12 @@ resource "aws_s3_bucket" "example" {
 }
 
 resource "aws_s3_bucket_versioning" "versioning_example" {
-  bucket = aws_s3_bucket.example.id
+  count = var.s3_bucket_config[0]
+
+  bucket = aws_s3_bucket.example[count.index].id
+
   versioning_configuration {
-    status = var.s3_bucket_config[2]
+    status = var.s3_bucket_config[2] ? "Enabled" : "Suspended"
   }
 }
 

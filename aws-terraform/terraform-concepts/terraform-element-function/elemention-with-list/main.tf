@@ -25,18 +25,20 @@ variable "instance_types" {
 
 variable "subnet_id" {
   type = list(string)
-  default = ["subnet-096d45c28d9fb4c14",
+  default = [
+    "subnet-096d45c28d9fb4c14",
     "subnet-05f285a35173783b0",
-  "subnet-0fe3255479ad7c3a4"]
+    "subnet-0fe3255479ad7c3a4"
+  ]
 }
 
 resource "aws_instance" "example" {
   ami                    = "ami-0fc5d935ebf8bc3bc"
-  instance_type          = element(var.instance_types, 1)
+  instance_type          = element(var.instance_types, 0)
   key_name               = "terraform-aws"
   vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
   subnet_id              = element(var.subnet_id, 0)
-  availability_zone      = element(var.availability_zones, 0)
+  availability_zone      = element(var.availability_zones, 2)
 
   root_block_device {
     volume_size = "10"
