@@ -1,4 +1,3 @@
-i
 ```s
 provider "aws" {
   # Configure your AWS provider settings here
