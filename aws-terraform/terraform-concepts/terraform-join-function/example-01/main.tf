@@ -23,6 +23,11 @@ locals {
   joined_string = join("-", local.split_list)
 }
 
+output "split" {
+  value = local.split_list
+}
+
 output "joined_string" {
   value = local.joined_string
 }
+

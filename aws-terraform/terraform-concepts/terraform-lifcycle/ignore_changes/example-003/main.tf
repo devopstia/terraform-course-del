@@ -23,12 +23,11 @@ resource "aws_db_instance" "default" {
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
 
-  lifecycle {
-    ignore_changes = [
-      password,
-      engine_version,
-      parameter_group_name
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     password,
+  #     engine_version,
+  #     parameter_group_name
+  #   ]
+  # }
 }
-

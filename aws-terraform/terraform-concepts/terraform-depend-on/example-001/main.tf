@@ -56,10 +56,10 @@ resource "aws_instance" "example" {
     Create_By = "Terraform"
   }
 
-  depends_on = [
-    aws_subnet.public_subnet,
-    aws_security_group.allow_ssh,
-  ]
+  # depends_on = [
+  #   aws_subnet.public_subnet,
+  #   aws_security_group.allow_ssh,
+  # ]
 }
 
 
