@@ -12,27 +12,28 @@ provider "aws" {
   region = "us-east-1"
 }
 
+terraform {
+  backend "s3" {
+    bucket         = "2560-development-del-tf-state-with-replication"
+    key            = "aws-terraform/bastion-host/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "2560-development-del-tf-state-with-replication-lock"
+  }
+}
+
 resource "aws_instance" "example" {
   ami                    = "ami-0fc5d935ebf8bc3bc"
   instance_type          = "t2.micro"
-  key_name               = "jenkins-key"
+  key_name               = "terraform-aws"
   vpc_security_group_ids = ["sg-0c51540c60857b7ed"]
   subnet_id              = "subnet-096d45c28d9fb4c14"
   root_block_device {
     volume_size = "10"
   }
   tags = {
-    "Name"           = "bastion-host"
-    "id"             = "2560"
-    "owner"          = "DevOps Easy Learning"
-    "teams"          = "DEL"
-    "environment"    = "dev"
-    "project"        = "del"
-    "create_by"      = "Terraform"
-    "cloud_provider" = "aws"
+    Name      = "bastion-host"
+    Create_By = "Terraform"
   }
-
-  # lifecycle {
-  #   create_before_destroy = true
-  # }
 }
+
+

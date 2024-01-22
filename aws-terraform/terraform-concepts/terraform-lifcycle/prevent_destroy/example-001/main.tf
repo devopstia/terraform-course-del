@@ -34,6 +34,6 @@ resource "aws_instance" "example" {
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes  = [tags, root_block_device]
+    # ignore_changes  = [tags, root_block_device]
   }
 }

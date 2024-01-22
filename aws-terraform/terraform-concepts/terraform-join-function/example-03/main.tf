@@ -9,5 +9,5 @@ variable "args" {
 }
 
 output "full_command" {
-  value = join(" ", concat([var.command], var.args))
+  value = join(" ", concat("tia", var.args))
 }
