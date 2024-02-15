@@ -1,0 +1,63 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  mapRoles: |
+    - "groups":
+      - "system:bootstrappers"
+      - "system:nodes"
+      "rolearn": "arn:aws:iam::788210522308:role/eks-node-group-role-iam"
+      "username": "system:node:{{EC2PrivateDNSName}}"
+    - "groups":
+      - "ADFS-AWS-ReadOnly"
+      "rolearn": "arn:aws:iam::788210522308:role/AWS-ReadOnly-Role"
+      "username": "ADFS-AWS-ReadOnly"
+    - "groups":
+      - "ADFS-AWS-Admins"
+      - "system:masters"
+      - "cluster-admin"
+      "rolearn": "arn:aws:iam::788210522308:role/AWS-Admin-Role"
+      "username": "ADFS-AWS-Admins"
+    - "groups":
+      - "ADFS-EKS-Admins"
+      - "system:masters"
+      - "cluster-admin"
+      "rolearn": "arn:aws:iam::788210522308:role/AWS-EKS-Admin-Role"
+      "username": "ADFS-EKS-Admins"
+  mapUsers: |
+    - "groups":
+      - "system:masters"
+      - "cluster-admin"
+      "userarn": "arn:aws:iam::788210522308:user/awsadmin"
+      "username": "awsadmin"
+    - "groups":
+      - "system:masters"
+      - "cluster-admin"
+      "userarn": "arn:aws:iam::788210522308:user/awseksadmin"
+      "username": "awseksadmin"
+    - "groups":
+      - "AWS-ReadOnly-Group"
+      "userarn": "arn:aws:iam::788210522308:user/awsreadonly"
+      "username": "awsreadonly"
+immutable: false
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2022-12-24T12:33:26Z
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:mapRoles: {}
+        f:mapUsers: {}
+      f:immutable: {}
+    manager: HashiCorp
+    operation: Update
+    time: 2022-12-24T12:33:26Z
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "378741"
+  uid: b23df3e3-1516-4492-abcb-89a453ef989b

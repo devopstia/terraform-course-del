@@ -1,0 +1,89 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress-external-dns
+  labels:
+    app: app-ingress
+  annotations:
+    kubernetes.io/ingress.class: "alb" 
+    alb.ingress.kubernetes.io/load-balancer-name: ingress-cert-discovery-via-host
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP 
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port  
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    external-dns.alpha.kubernetes.io/hostname: articles.devopseasylearning.net, dev.devopseasylearning.net
+spec:
+  defaultBackend:
+    service:
+      name: articles-nodeport-service
+      port:
+        number: 80
+  rules: 
+    - host: covid19.devopseasylearning.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: covid19-nodeport-service
+                port: 
+                  number: 80
+    - host: creative.devopseasylearning.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: creative-nodeport-service
+                port: 
+                  number: 80
+    - host: halloween.devopseasylearning.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: halloween-nodeport-service
+                port: 
+                  number: 80
+    - host: phone.devopseasylearning.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: phone-nodeport-service
+                port: 
+                  number: 80
+    - host: static.devopseasylearning.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: static-nodeport-service
+                port: 
+                  number: 80
+    - host: website.devopseasylearning.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: website-nodeport-service
+                port: 
+                  number: 80
+   

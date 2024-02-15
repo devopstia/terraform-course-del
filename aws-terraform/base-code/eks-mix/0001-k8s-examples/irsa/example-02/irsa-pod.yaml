@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-deployment
+  name: test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-deployment
+  template:
+    metadata:
+      labels:
+        app: test-deployment
+    spec:
+      serviceAccountName: asume-role-s3-read-only-sa #Name of the SA we ‘re using
+      automountServiceAccountToken: true
+      containers:
+      - image: amazon/aws-cli
+        name: aws
+        command: ["sleep","10000"]

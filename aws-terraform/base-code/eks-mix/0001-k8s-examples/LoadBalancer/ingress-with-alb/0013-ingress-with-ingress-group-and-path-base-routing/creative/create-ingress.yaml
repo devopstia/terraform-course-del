@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: creative-ingress-external-dns
+  labels:
+    app: creative
+  annotations:
+    kubernetes.io/ingress.class: "alb" 
+    alb.ingress.kubernetes.io/load-balancer-name: alb-ingress-group
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP 
+    alb.ingress.kubernetes.io/healthcheck-port: "80"  
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:788210522308:certificate/c3eebb6d-52d1-47d2-88f9-032c8fa3652a
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    external-dns.alpha.kubernetes.io/hostname: dev.devopseasylearning.net
+    # Ingress Groups
+    alb.ingress.kubernetes.io/group.name: apps-ingress-group
+    alb.ingress.kubernetes.io/group.order: '30'
+spec:
+  rules:  
+    - http:
+        paths:
+          - path: /creative
+            pathType: Prefix
+            backend:
+              service:
+                name: creative-nodeport-service
+                port: 
+                  number: 80

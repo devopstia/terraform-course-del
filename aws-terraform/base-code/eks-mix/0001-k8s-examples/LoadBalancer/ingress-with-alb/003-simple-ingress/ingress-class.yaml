@@ -1,0 +1,10 @@
+# apiVersion: networking.k8s.io/v1
+# kind: IngressClass
+# metadata:
+#   name: aws-elb-ingress-class
+#   annotations:
+#     # this is usefull if you want all ingress deploy in the kubernetes cluster are ALB by default.
+#     ingressclass.kubernetes.io/is-default-class: "true"
+# spec:
+#   controller: ingress.k8s.aws/alb
+

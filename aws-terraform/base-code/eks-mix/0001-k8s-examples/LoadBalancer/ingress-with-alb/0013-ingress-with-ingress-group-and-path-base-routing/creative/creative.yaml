@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: creative-deployment
+  labels:
+    app: creative
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: creative
+  template:
+    metadata:
+      labels:
+        app: creative
+    spec:
+      containers:
+        - name: creative
+          image: leonardtia/tia:microservices
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: creative-nodeport-service
+  labels:
+    app: creative
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /creative/index.html
+spec:
+  type: NodePort # or ClusterIP
+  selector:
+    app: creative
+  ports:
+    - port: 80
+      targetPort: 80
+
+   
