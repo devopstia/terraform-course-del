@@ -10,7 +10,7 @@ You can create the Role via CFT or Terraform making sure to include the principl
 Format:
 /{AssetID}/{AssetAreaName}/{ResourceType}/{ResourceName}/{Name}
 Example:
-/2624/pecs/eks/dev-pecs/node-iam-profile-arn
+/2624/alpha/eks/dev-alpha/node-iam-profile-arn
 ```
 
 ==== Example Install
@@ -32,7 +32,7 @@ metadata:
   labels:
     name: landonkt-nginx
   annotations:
-    iam.amazonaws.com/role: k8s-pecs-testing-assume
+    iam.amazonaws.com/role: k8s-alpha-testing-assume
 spec:
   containers:
   - image: nginx
@@ -52,7 +52,7 @@ Hit:5 http://security-cdn.debian.org/debian-security stretch/updates InRelease
 Fetched 91.0 kB in 1s (88.8 kB/s)
 Reading package lists... Done
 root@nginx:/# curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
-k8s-pecs-testing-assume
+k8s-alpha-testing-assume
 root@nginx:/#
 
 

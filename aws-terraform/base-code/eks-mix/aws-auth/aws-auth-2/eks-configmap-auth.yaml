@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::[AWS_ACCOUNT_NUMBER]:role/eks-node-group-nodes
+      username: system:node:{{EC2PrivateDNSName}}
+    - groups:
+      - system:masters
+      rolearn: arn:aws:iam::[AWS_ACCOUNT_NUMBER]:role/EKS-Admin-Role
+      username: eks-cluster-admin
+    - groups:
+      - system:masters
+      rolearn: arn:aws:iam::[AWS_ACCOUNT_NUMBER]:role/EKS-Readonly-Role
+      username: eks-readonly-group
+  mapUsers: |
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::[AWS_ACCOUNT_NUMBER]:user/awsadmin"
+      "username": "awsadmin"
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::[AWS_ACCOUNT_NUMBER]:user/awseksadmin"
+      "username": "awseksadmin"
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::[AWS_ACCOUNT_NUMBER]:user/awsreadonly"
+      "username": "awsreadonly"
+    
+    

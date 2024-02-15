@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: pdbdemo
+spec:
+  minAvailable: 2 # 2 pods should alow be available
+  selector:
+    matchLabels:
+      run: nginx
+

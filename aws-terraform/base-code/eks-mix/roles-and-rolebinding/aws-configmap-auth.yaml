@@ -1,0 +1,83 @@
+apiVersion: v1
+data:
+  mapRoles: |
+    - "groups":
+      - "system:bootstrappers"
+      - "system:nodes"
+      "rolearn": "arn:aws:iam::788210522308:role/eks-node-group-nodes"
+      "username": "system:node:{{EC2PrivateDNSName}}"
+    - "groups":
+      - "system:masters"
+      "rolearn": "arn:aws:iam::788210522308:role/EKS-Admin-Role"
+      "username": "EKS Cluster Admin"
+    - "groups":
+      - "eks-readonly-group"
+      "rolearn": "arn:aws:iam::788210522308:role/EKS-Readonly-Role"
+      "username": "EKS Cluster Readonly"
+  mapUsers: |
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::788210522308:user/awsadmin"
+      "username": "awsadmin"
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::788210522308:user/awseksadmin"
+      "username": "awseksadmin"
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::788210522308:user/awsreadonly"
+      "username": "awsreadonly"
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2022-09-08T01:08:41Z
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:mapRoles: {}
+        f:mapUsers: {}
+    manager: HashiCorp
+    operation: Update
+    time: 2022-09-08T01:08:41Z
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "12780"
+  uid: 1ea49372-54da-46da-91b2-c2a691718c3a
+
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::788210522308:role/eks-node-group-nodes
+      username: system:node:{{EC2PrivateDNSName}}
+    - groups:
+      - system:masters
+      rolearn: arn:aws:iam::788210522308:role/EKS-Admin-Role
+      username: eks-cluster-admin
+    - groups:
+      - system:masters
+      rolearn: arn:aws:iam::788210522308:role/EKS-Readonly-Role
+      username: eks-readonly-group
+  mapUsers: |
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::788210522308:user/awsadmin"
+      "username": "awsadmin"
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::788210522308:user/awseksadmin"
+      "username": "awseksadmin"
+    - "groups":
+      - "system:masters"
+      "userarn": "arn:aws:iam::788210522308:user/awsreadonly"
+      "username": "awsreadonly"

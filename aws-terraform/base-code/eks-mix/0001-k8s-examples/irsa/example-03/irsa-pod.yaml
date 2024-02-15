@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      serviceAccountName: asume-role-s3-read-only-sa
+      initContainers:
+      - name: aws-cli
+        image: "amazon/aws-cli:latest"
+        command: ["aws", "s3", "ls"]
+      containers:
+      - name: nginx
+        image: "nginx:latest"
+        ports: 
+        - containerPort: 80

@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata: 
+  name: ebs-sc # storage class name
+provisioner: ebs.csi.aws.com # Amazon EBS CSI driver
+parameters:
+  type: gp3
+  encrypted: "true" # EBS volumes will always be encrypted by default
+  fsType: ext4
+volumeBindingMode: WaitForFirstConsumer 
+reclaimPolicy: Delete # the default is true
+allowVolumeExpansion: true
+

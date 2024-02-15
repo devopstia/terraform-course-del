@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+ name: asume-role-s3-read-only-sa
+ namespace: dev
+ annotations:
+   eks.amazonaws.com/role-arn: arn:aws:iam::788210522308:role/asume-role-s3-read-only
