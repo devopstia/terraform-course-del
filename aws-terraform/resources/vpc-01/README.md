@@ -1,7 +1,7 @@
 ## Local Reference
 ```s
-module "vpc-01" {
-  source             = "../../modules/vpc-01"
+module "vpc" {
+  source             = "../../modules/vpc"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones
@@ -13,8 +13,8 @@ module "vpc-01" {
 ## SSH Local Reference From Github
 - You must use ssh key to authentication if it is a private repository
 ```s
-module "vpc-01" {
-  source             = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc-01?ref=main"
+module "vpc" {
+  source             = "git::ssh://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones
@@ -27,8 +27,8 @@ module "vpc-01" {
 ## HTTPS Local Reference From Github
 - You must use token to authentication if it is a private repository
 ```s
-module "vpc-01" {
-  source             = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc-01?ref=main"
+module "vpc" {
+  source             = "git::https://git@github.com/devopstia/terraform-course-del.git//aws-terraform/modules/vpc?ref=main"
   cidr_block         = local.cidr_block
   region             = local.region
   availability_zones = local.availability_zones
@@ -39,8 +39,8 @@ module "vpc-01" {
 
 
 ## Add tags
-- add the below tags if you are using the default VPC-01 so that the aws-load-balancer-controller can discover the subnets
-- This should be perfect for all public subnet for default vpc-01: "kubernetes.io/role/elb" = 1
+- add the below tags if you are using the default VPC so that the aws-load-balancer-controller can discover the subnets
+- This should be perfect for all public subnet for default vpc: "kubernetes.io/role/elb" = 1
 
 ```s
 public_subnet_tags = {
@@ -63,6 +63,14 @@ kubernetes.io/role/internal-elb = 1
 ```s
 tags = merge(var.tags, {
     Name                                        = format("%s-%s-%s-public-subnet-${count.index + 1}-${element(var.availability_zones, count.index)}", var.tags["id"], var.tags["environment"], var.tags["project"])
+    "kubernetes.io/role/elb"           = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    },
+  )
+
+```s
+tags = merge(var.tags, {
+    Name                                        = format("%s-%s-%s-private-subnet-${count.index + 1}-${element(var.availability_zones, count.index)}", var.tags["id"], var.tags["environment"], var.tags["project"])
     "kubernetes.io/role/internal-elb"           = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     },
@@ -72,4 +80,33 @@ tags = merge(var.tags, {
 ```
 kubernetes.io/role/internal-elb          = 1
 kubernetes.io/cluster/2560-dev-del = shared
+```
+
+## cidrsubnet
+```t
+cidrsubnet("10.0.0.0/16", 8, 0)
+cidrsubnet("10.0.0.0/16", 8, 1)
+cidrsubnet("10.0.0.0/16", 8, 2)
+
+cidrsubnet("10.0.0.0/16", 8, 3)
+cidrsubnet("10.0.0.0/16", 8, 4)
+cidrsubnet("10.0.0.0/16", 8, 5)
+
+
+cidrsubnet("10.0.0.0/16", 8, 1)
+cidrsubnet("10.0.0.0/16", 8, 2)
+cidrsubnet("10.0.0.0/16", 8, 3)
+
+cidrsubnet("10.0.0.0/16", 8, 4)
+cidrsubnet("10.0.0.0/16", 8, 5)
+cidrsubnet("10.0.0.0/16", 8, 6)
+
+
+cidrsubnet("10.0.0.0/16", 6, 0)
+cidrsubnet("10.0.0.0/16", 6, 1)
+cidrsubnet("10.0.0.0/16", 6, 2)
+
+cidrsubnet("10.0.0.0/16", 8, 3)
+cidrsubnet("10.0.0.0/16", 8, 4)
+cidrsubnet("10.0.0.0/16", 8, 5)
 ```
