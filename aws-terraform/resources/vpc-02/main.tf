@@ -61,4 +61,5 @@ module "vpc-02" {
   enable_dns_hostnames             = local.enable_dns_hostnames
   assign_generated_ipv6_cidr_block = local.assign_generated_ipv6_cidr_block
   cluster_name                     = local.cluster_name
+  tags                             = local.tags
 }
