@@ -32,12 +32,12 @@ locals {
   # }
 
   private_subnets = {
-    us-east-1a = "subnet-01192d5e2ca3bcc4b"
-    us-east-1b = "subnet-07e654dd8a4351aa5"
-    us-east-1c = "subnet-0cac1247c39bd6da2"
+    us-east-1a = "2560-dev-del-private-subnet-3-us-east-1c"
+    us-east-1b = "2560-dev-del-private-subnet-1-us-east-1a"
+    us-east-1c = "2560-dev-del-private-subnet-2-us-east-1b"
   }
 
-  eks_version  = "1.24"
+  eks_version  = "1.28"
   node_min     = "1"
   desired_node = "1"
   node_max     = "2"
