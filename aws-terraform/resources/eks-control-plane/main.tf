@@ -24,7 +24,7 @@ terraform {
 locals {
   region                  = "us-east-1"
   cluster_name            = "2560-dev-del"
-  eks_version             = 1.24
+  eks_version             = 1.28
   endpoint_private_access = false
   endpoint_public_access  = true
 
@@ -35,9 +35,9 @@ locals {
   # }
 
   public_subnets = {
-    us-east-1a = "subnet-055cc80108f6ee52a"
-    us-east-1b = "subnet-087f82bceda1aab7e"
-    us-east-1c = "subnet-02648eade7d335690"
+    us-east-1a = "2560-dev-del-public-subnet-3-us-east-1c"
+    us-east-1b = "2560-dev-del-public-subnet-2-us-east-1b"
+    us-east-1c = "2560-dev-del-public-subnet-1-us-east-1a"
   }
 
   tags = {

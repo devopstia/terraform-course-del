@@ -15,6 +15,26 @@ remote_state {
     key = "${path_relative_to_include()}/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
-    dynamodb_table = "${local.common.assetid}-${local.common.environment}-${local.common.project}-tf-state"
+    dynamodb_table = "${local.common.assetid}-${local.common.environment}-${local.common.project}-tf-state-lock"
   }
 }
+
+
+
+# # stage/terragrunt.hcl
+# remote_state {
+#   backend = "s3"
+#   generate = {
+#     path      = "backend.tf"
+#     if_exists = "overwrite_terragrunt"
+#   }
+#   config = {
+#     bucket = "2560-dev-del-tf-state"
+
+#     key = "${path_relative_to_include()}/terraform.tfstate"
+#     region         = "us-east-1"
+#     encrypt        = true
+#     dynamodb_table = "2560-dev-del-tf-state-lock"
+#   }
+# }
+
