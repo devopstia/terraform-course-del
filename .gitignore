@@ -26,3 +26,5 @@ backend/.idea/*
 
 *.terragrunt.*
 .terragrunt-cache
+
+azure-terraform/Notes
