@@ -22,7 +22,7 @@ resource "aws_instance" "example" {
     volume_size = "10"
   }
   tags = {
-    Name      = "virtual machine"
+    Name      = "virtual_machine"
     Create_By = "Terraform"
   }
 }
