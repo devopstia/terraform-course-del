@@ -18,7 +18,7 @@ provider "azurerm" {
 # Resource-1: Azure Resource Group
 resource "azurerm_resource_group" "myrg1" {
   name     = "learning2"
-  location = "East US"
+  location = "eastus"
 }
 
 # Resource-2: Random String 

@@ -4,7 +4,6 @@ resource "azurerm_storage_account" "mysa" {
   location                 = var.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
-  #   enable_versioning        = true
   blob_properties {
     versioning_enabled = true
   }

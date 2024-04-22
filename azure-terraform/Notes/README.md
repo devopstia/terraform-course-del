@@ -153,7 +153,7 @@ provider "azurerm" {
 }
 
 locals {
-  locations =["West Europe", "East US", "West US"]
+  locations =["West Europe", "eastus", "West US"]
 }
 
 resource "azurerm_resource_group" "example" {

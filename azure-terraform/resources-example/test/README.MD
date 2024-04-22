@@ -31,7 +31,7 @@ variable "virtual_machines" {
 
 resource "azurerm_resource_group" "example" {
   name     = "my-resource-group"
-  location = "East US"
+  location = "eastus"
 }
 
 resource "azurerm_linux_virtual_machine" "vm1" {

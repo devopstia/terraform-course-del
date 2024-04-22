@@ -6,7 +6,7 @@ provider "azurerm" {
 # Define the Azure resource group
 resource "azurerm_resource_group" "example" {
   name     = "myResourceGroup"
-  location = "East US"
+  location = "eastus"
 }
 
 # Define the Azure virtual network

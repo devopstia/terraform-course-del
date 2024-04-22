@@ -18,3 +18,14 @@ terraform init
 terraform fmt
 terraform apply --auto-approve
 cd -
+
+
+# echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+# echo "Deploying the AKS module"
+# echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+# sleep 3
+# cd modules/aks-controle-plane
+# terraform init
+# terraform fmt
+# terraform apply --auto-approve
+# cd -

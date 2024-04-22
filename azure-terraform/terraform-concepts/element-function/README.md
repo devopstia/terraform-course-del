@@ -8,7 +8,7 @@ provider "azurerm" {
 # Define the Azure resource group
 resource "azurerm_resource_group" "example" {
   name     = "myResourceGroup"
-  location = "East US"
+  location = "eastus"
 }
 
 # Define the Azure virtual network
@@ -42,15 +42,15 @@ resource "azurerm_subnet" "example" {
 variable "region_to_vnet" {
   type    = map(string)
   default = {
-    "East US"      = "vnet-east"
+    "eastus"      = "vnet-east"
     "West US"      = "vnet-west"
     "North Europe" = "vnet-north"
   }
 }
 
-# Access the virtual network name for the "East US" region
+# Access the virtual network name for the "eastus" region
 locals {
-  east_us_vnet = element(var.region_to_vnet, "East US")
+  east_us_vnet = element(var.region_to_vnet, "eastus")
 }
 ```
 

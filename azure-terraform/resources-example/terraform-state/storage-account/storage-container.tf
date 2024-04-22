@@ -10,7 +10,7 @@ resource "random_string" "myrandom" {
 
 resource "azurerm_resource_group" "myrg" {
   name     = format("%s-%s-%s-storage", var.tags["id"], var.tags["environment"], var.tags["project"])
-  location = "East US"
+  location = "eastus"
   tags = merge(var.tags, {
     Name = format("%s-%s-%s-storage", var.tags["id"], var.tags["environment"], var.tags["project"])
     },

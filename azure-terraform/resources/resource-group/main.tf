@@ -8,13 +8,12 @@ terraform {
   }
 }
 
-
 provider "azurerm" {
   features {}
 }
 
 locals {
-  location = "East US"
+  location = "eastus"
 
   tags = {
     "id"             = "2560"
