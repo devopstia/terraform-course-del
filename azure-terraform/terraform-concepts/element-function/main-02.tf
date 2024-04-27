@@ -6,7 +6,7 @@
 # # Define the Azure resource group
 # resource "azurerm_resource_group" "example" {
 #   name     = "myResourceGroup"
-#   location = "East US"
+#   location = "eastus"
 # }
 
 # # Define a list of VM names, sizes, and OS images

@@ -1,0 +1,7 @@
+{
+  "tenantId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "subscriptionId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "resourceGroup": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "aadClientId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "aadClientSecret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}

@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadbalancer-deployment
+  labels:
+    app: loadbalancer-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadbalancer-app
+  template:
+    metadata:
+      labels:
+        app: loadbalancer-app
+    spec:
+      containers:
+        - name: loadbalancer-app
+          image: leonardtia/tia:microservices
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-service
+  labels:
+    app: loadbalancer-app
+  annotations:
+spec:
+  type: LoadBalancer
+  selector:
+    app: loadbalancer-app
+  ports:
+    - port: 80
+      targetPort: 80
+
+   

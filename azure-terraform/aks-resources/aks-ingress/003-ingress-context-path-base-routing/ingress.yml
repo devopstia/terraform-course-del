@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginxapp1-ingress-service 
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /covid19
+            pathType: Prefix
+            backend:
+              service:
+                name: covid19-nodeport-service
+                port:
+                  number: 80  
+          - path: /halloween
+            pathType: Prefix
+            backend:
+              service:
+                name: halloween-nodeport-service
+                port:
+                  number: 80
+          - path: /phone
+            pathType: Prefix
+            backend:
+              service:
+                name: phone-nodeport-service
+                port:
+                  number: 80
+          - path: /static
+            pathType: Prefix
+            backend:
+              service:
+                name: static-nodeport-service
+                port:
+                  number: 80
+          - path: /website
+            pathType: Prefix
+            backend:
+              service:
+                name: website-nodeport-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: articles-nodeport-service
+                port:
+                  number: 80
