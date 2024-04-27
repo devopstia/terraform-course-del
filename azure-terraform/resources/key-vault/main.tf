@@ -21,7 +21,7 @@ locals {
     "environment"    = "dev"
     "project"        = "del"
     "create_by"      = "Terraform"
-    "cloud_provider" = "aws"
+    "cloud_provider" = "azure"
   }
 }
 

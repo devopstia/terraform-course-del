@@ -5,6 +5,11 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dns_prefix          = format("%s-%s-%s-dns-prefix", var.tags["id"], var.tags["environment"], var.tags["project"])
   kubernetes_version  = data.azurerm_kubernetes_service_versions.current.latest_version
 
+  sku_tier                = "Free" # For production change to "Standard" 
+  private_cluster_enabled = false
+  # public_network_access_enabled = true
+  automatic_channel_upgrade = "stable"
+
   default_node_pool {
     name                 = "systempool"
     vm_size              = "Standard_DS2_v2"
@@ -12,10 +17,12 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     zones                = [1, 2, 3]
     vnet_subnet_id       = data.azurerm_subnet.existing_subnet.id
     enable_auto_scaling  = true
-    max_count            = 3
-    min_count            = 1
-    os_disk_size_gb      = 30
-    type                 = "VirtualMachineScaleSets"
+
+    max_count       = 3
+    min_count       = 1
+    os_disk_size_gb = 30
+
+    type = "VirtualMachineScaleSets"
     node_labels = {
       "nodepool-type" = "system"
       "environment"   = "dev"
