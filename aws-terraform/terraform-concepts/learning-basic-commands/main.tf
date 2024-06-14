@@ -15,14 +15,14 @@ provider "aws" {
 resource "aws_instance" "example" {
   ami                    = "ami-0c7217cdde317cfec"
   instance_type          = "t2.micro"
-  key_name               = "terraform-aws"
-  vpc_security_group_ids = ["sg-0c51540c60857b7ed", "sg-0c51540c60857b7ed"]
-  subnet_id              = "subnet-096d45c28d9fb4c14"
+  key_name               = "terraform_aws"
+  vpc_security_group_ids = ["sg-01029671868439d58"]
+  subnet_id              = "subnet-0cb3c71f40d73c4dc"
   root_block_device {
     volume_size = "10"
   }
   tags = {
-    Name      = "vm"
+    Name      = "virtual_machine"
     Create_By = "Terraform"
   }
 }
